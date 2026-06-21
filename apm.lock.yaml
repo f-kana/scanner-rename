@@ -1,0 +1,19 @@
+lockfile_version: '1'
+generated_at: '2026-06-21T14:42:16.601202+00:00'
+apm_version: 0.21.0
+dependencies:
+- repo_url: mizchi/skills
+  host: github.com
+  resolved_commit: 89c1b34018ba0d85a770c065ba22f83a8d004d34
+  resolved_ref: 89c1b340
+  virtual_path: meta/empirical-prompt-tuning
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/empirical-prompt-tuning
+  - .claude/skills/empirical-prompt-tuning/SKILL-ja.md
+  - .claude/skills/empirical-prompt-tuning/SKILL.md
+  deployed_file_hashes:
+    .claude/skills/empirical-prompt-tuning/SKILL-ja.md: sha256:0a38d830802c2e08a7faca13928fedf6911e00b896946b4b03910d662de6dea5
+    .claude/skills/empirical-prompt-tuning/SKILL.md: sha256:252418e7ef022981d2dda2e3ec57fa1c786d30af68c50b7e062edf1d7361b0cb
+  content_hash: sha256:0caa36857ba4e1f7193fa9ee3e22cac38d7e9787eda95e1726d4a39e40fb9479
