@@ -1,0 +1,23 @@
+{
+  "skill_name": "classifying-harness",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "さっきのセッションでClaudeがテスト実行せずにコミットしちゃった。CLAUDE.mdに『コミット前にテスト必須』って追加して",
+      "expected_output": "Hook/CI（カテゴリ3）に分類し、CLAUDE.mdではなくpre-commit hookを提案する。CLAUDE.md change reviewは実行しない。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "src/adapters/ 以下のファイルでは、SQLAlchemyのセッションを直接使わずにリポジトリパターンを使うルールを設定したい。どこに書くのがいい？",
+      "expected_output": "Path-scoped rule（カテゴリ6）に分類し、.claude/rules/ にpath-scoped ruleの作成を提案する。CLAUDE.mdへの追記は提案しない。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "僕はPythonは得意だけどTypeScriptは初心者だから、TS触るときは丁寧に説明してほしい。CLAUDE.mdに書いておいて",
+      "expected_output": "メモリの問題と判断し、CLAUDE.mdではなくUser scopeの個人メモリ（autoメモリのuserタイプ）への記録を提案する。",
+      "files": []
+    }
+  ]
+}
