@@ -1,20 +1,20 @@
 lockfile_version: '1'
-generated_at: '2026-06-21T21:44:08.800871+00:00'
+generated_at: '2026-06-21T22:10:51.468096+00:00'
 apm_version: 0.21.0
 dependencies:
 - repo_url: mattpocock/skills
   host: github.com
   resolved_commit: 2454c95dc305c158b21a0cdafeb728879dd0359a
   resolved_ref: v1.0.1
-  virtual_path: skills/productivity/grill-me
+  virtual_path: skills/productivity/grilling
   is_virtual: true
   package_type: claude_skill
   deployed_files:
-  - .claude/skills/grill-me
-  - .claude/skills/grill-me/SKILL.md
+  - .claude/skills/grilling
+  - .claude/skills/grilling/SKILL.md
   deployed_file_hashes:
-    .claude/skills/grill-me/SKILL.md: sha256:6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54
-  content_hash: sha256:f321507f77702a54af1db66549ec1685fc625390d06c57d7949cdcda8eb1b5c7
+    .claude/skills/grilling/SKILL.md: sha256:fe00af3e1815f97c0a7644605479328a726b5cd95ba6ef56a4be2a92fae6c20f
+  content_hash: sha256:ef685a6fa0bbe73b05bbd8dc1ec97258191587f07c6aa7dbc9006675ceb8f90f
 - repo_url: mizchi/skills
   host: github.com
   resolved_commit: 89c1b34018ba0d85a770c065ba22f83a8d004d34

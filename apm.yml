@@ -11,7 +11,7 @@ targets:
 dependencies:
   apm:
     - mizchi/skills/meta/empirical-prompt-tuning#89c1b340
-    - mattpocock/skills/skills/productivity/grill-me#v1.0.1
+    - mattpocock/skills/skills/productivity/grilling#v1.0.1
   mcp: []
 includes: auto
 scripts: {}
