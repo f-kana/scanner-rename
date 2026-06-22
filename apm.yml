@@ -7,13 +7,12 @@ author: F. Kanayama
 # Accepted values: vscode, agents, copilot, claude, cursor, opencode, codex,
 # gemini, antigravity, windsurf, kiro, agent-skills, all
 targets:
-- claude
+  - claude
 dependencies:
   apm:
     - mizchi/skills/meta/empirical-prompt-tuning#89c1b340
     - mattpocock/skills/skills/productivity/grilling#v1.0.1
+    - anthropics/skills/skills/skill-creator
   mcp: []
 includes: auto
 scripts: {}
-
-    
