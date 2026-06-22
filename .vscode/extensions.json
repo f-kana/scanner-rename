@@ -1,5 +1,16 @@
 {
     "recommendations": [
-        "ms-vscode.makefile-tools"
+        "ms-python.python",
+        "ms-python.debugpy",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "ms-vscode.makefile-tools",
+        "tamasfe.even-better-toml"
+    ],
+    "unwantedRecommendations": [
+        "ms-python.autopep8",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.flake8"
     ]
 }
