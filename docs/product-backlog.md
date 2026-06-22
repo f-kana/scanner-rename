@@ -10,8 +10,10 @@ Python プロジェクトのセットアップ。
 
 - [x] **PBI-ph0-001** `pyproject.toml`、uv、pytest、ruff 等
 - [x] **PBI-ph0-001-1** カバレッジ計測機能の追加
-- [ ] **PBI-ph0-001-2** VS Code 設定整備(.vscode/settings.json)
-- [ ] **PBI-ph0-001-3** VS Code Extensionの整備(.vscode/extensions.json)
+- [x] **PBI-ph0-001-2** VS Code 設定整備(.vscode/settings.json)
+- [x] **PBI-ph0-001-3** VS Code Extensionの整備(.vscode/extensions.json) + pyright導入
+- [x] **PBI-ph0-001-4** Prettier 導入（package.json、.prettierrc、Node.js 依存）
+- [ ] **PBI-ph0-001-5** Python コーディング規約の導入
 - [ ] **PBI-ph0-002** DevContainer 設定（`.devcontainer/`）
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [ ] **PBI-ph0-004** Claude Code Hooksの設定

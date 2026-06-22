@@ -1,5 +1,29 @@
 {
+  "permissions": {
+    "defaultMode": "acceptEdits"
+  },
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "api.github.com",
+        "githubusercontent.com",
+        "registry.npmjs.org",
+        "pypi.org",
+        "files.pythonhosted.org"
+      ]
+    },
+    "filesystem": {
+      "allowWrite": [
+        ".claude/skills",
+        ".claude/hooks",
+        ".claude/rules"
+      ]
+    }
   }
 }

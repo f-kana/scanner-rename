@@ -1,11 +1,11 @@
 ---
-name: harness-retrospective
+name: retrospecting-harness
 description: Analyzes Claude Code sessions with misalignment, repeated corrections, unexpected agent behavior, or hard-won workflow lessons. Use after development sessions to propose safe, reviewable updates to CLAUDE.md, project skills, rules, hooks, slash commands, tests, CI, or eval cases.
 ---
 
-# Harness Retrospective
+# Retrospecting Harness
 
-このSkillは、Claude Codeのセッションで開発タスクが完了した後に、当該セッションの会話履歴からユーザーの期待とClaudeの行動がズレた箇所を分析し、同じ紆余曲折を減らす（ユーザーの意図に沿った生成を一発で行う）ためのharness改修案を作る。
+このSkillは、Claude Codeのセッションで開発タスクが完了した後に、当該セッションの会話履歴からユーザーの期待とClaudeの行動がズレた箇所を分析し、同様の紆余曲折の再発を減らす（ユーザーの意図に沿った生成を一発で行う）ためのharness改修案を作る。
 
 対象harness:
 
@@ -53,6 +53,7 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 * 最終的にうまくいった方針
 * 既存harnessに不足していた情報
 * 最初から分かっていれば避けられた往復
+* 環境設定（sandbox、permissions、hooks、settings）の不備による摩擦
 
 不明点があっても、すぐ質問しない。
 ログから合理的に推定できる範囲で進める。
@@ -78,22 +79,26 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 * `CLAUDE.md`の情報不足
 * rule/hook/test/CI不足
 * 既存指示の矛盾
+* 環境設定の不備（sandbox許可、permissions、hooks設定がツールチェインと合っていない）
 * 今回だけの文脈依存
 
 ### 3. 反映先を選ぶ
 
-各学びを、次のいずれかに分類する。
+各学びを、`classifying-harness`スキルの分類ワークフローに従い、適切な反映先に分類する。
 
 | 反映先                | 使う条件                              |
 | ------------------ | --------------------------------- |
-| `CLAUDE.md`        | project全体で常に有効な前提・制約・重要コマンド       |
+| `CLAUDE.md`        | project全体で常に有効な前提・制約・重要コマンド（最後の手段） |
 | `SKILL.md`         | 特定ワークフローの手順・判断基準・進め方              |
 | `.claude/rules/**` | ファイル種別、ディレクトリ、技術スタック、特定パスに閉じた規約   |
 | hooks              | コマンドや静的解析で機械的に検出・強制できるもの          |
 | slash command      | 何度も使う定型プロンプト                      |
 | tests / CI         | 期待動作をコードやパイプラインで検証できるもの           |
 | eval cases         | Skillやharness改善の再発テスト             |
+| メモリ               | 個人属性（スキルレベル、言語の得意不得意）やプロジェクト文脈の記録 |
 | 反映しない              | 今回限り、事実不明、一般化すると害が大きい、既存指示と矛盾するもの |
+
+CLAUDE.mdへの変更を提案する場合は、`classifying-harness`スキルのCLAUDE.md change reviewチェックリストを実行する。
 
 ### 4. 提案を作る
 
@@ -210,6 +215,8 @@ Skill Creatorを使える環境では、このeval caseを使ってold Skill / n
 * 既存指示と矛盾しない
 * 短く書ける
 * Skillやruleに閉じ込めるより全体共有が妥当
+
+CLAUDE.md変更を提案する場合は、`classifying-harness`スキルのCLAUDE.md change reviewチェックリストに従うこと。
 
 ### Skillに入れる
 
