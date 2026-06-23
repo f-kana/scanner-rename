@@ -1,0 +1,31 @@
+{
+    "name": "scanner-rename",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        }
+    },
+    "remoteUser": "vscode",
+    "runArgs": ["--userns=keep-id"],
+    "postCreateCommand": "uv sync && npm install && npx apm install && npm install -g @anthropic-ai/claude-code",
+    "containerEnv": {
+        "GCP_TEST_BROKER_URL": "http://host.containers.internal:8765",
+        "TZ": "Asia/Tokyo"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.debugpy",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff",
+                "esbenp.prettier-vscode",
+                "ms-vscode.makefile-tools",
+                "tamasfe.even-better-toml"
+            ]
+        }
+    }
+}
