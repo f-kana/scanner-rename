@@ -46,15 +46,20 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 
 変更先を決める前に、その変更がどのスコープに属するかを判断する。
 
-| スコープ | パス | 用途 | gitコミット |
-|---------|------|------|------------|
-| **Project scope** | `<PJ_ROOT>/.claude/`, `CLAUDE.md` | チーム共有のルール・スキル・設定 | する |
-| **Project local** | `CLAUDE.local.md` | 個人のプロジェクト固有設定 | しない（.gitignore） |
-| **User scope** | `~/.claude/` | 個人の全プロジェクト共通設定・メモリ | 対象外 |
+| スコープ | パス | 用途 | 読み込みタイミング | gitコミット |
+|---------|------|------|------------------|------------|
+| **Project scope (global)** | `<PJ_ROOT>/CLAUDE.md`, `<PJ_ROOT>/.claude/` | チーム共有のルール・スキル・設定（全セッション） | セッション開始時、常時保持 | する |
+| **Project scope (on-demand)** | `<PJ_ROOT>/<subdir>/CLAUDE.md` | 特定ディレクトリ固有の指示 | そのディレクトリ内のファイルを読む時のみ | する |
+| **Project local** | `CLAUDE.local.md` | 個人のプロジェクト固有設定 | セッション開始時 | しない（.gitignore） |
+| **User scope** | `~/.claude/` | 個人の全プロジェクト共通設定・メモリ | セッション開始時 | 対象外 |
 
 **基本方針: Project scopeを優先する。**
 
 チームで共有可能な設定はProject scopeに置く。User scopeに頼ると、他のメンバーが同じ恩恵を受けられない。
+
+**サブディレクトリのCLAUDE.mdを使う場合:**
+- ルートのCLAUDE.mdに書くほどグローバルではないが、特定ディレクトリでは常に適用したい指示
+- 例: モノレポの`apps/api/CLAUDE.md`（APIディレクトリ内でのみ有効な規約）
 
 **User scopeが適切な場合:**
 - 個人のスキルレベル（「Pythonは初心者」「Goは10年」）
@@ -81,29 +86,34 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 
 ### Step 5: Harness Change Classification
 
-問題を以下の8カテゴリに分類する。
+問題を以下の10カテゴリに分類する。
 
 | # | カテゴリ | 条件 | 例 |
 |---|---------|------|-----|
 | 1 | **永続的な変更は不要** | 曖昧なプロンプト、一回限りの文脈、セッション内の推論不足 | 「今回だけ型チェックを飛ばして」→ 恒久化不要 |
 | 2 | **Prompt / slash command** | 人間が明示的に呼び出す再利用可能なプロンプト | 定型レビュー手順、定型デプロイ前チェック |
 | 3 | **Hook / permission / CI** | 決定的に強制すべき制約（format、test、secrets、破壊的操作） | `git push --force` の禁止 → hookで強制 |
-| 4 | **Skill更新 / 新規Skill** | 再利用可能な複数ステップのワークフロー | レビュー手順、移行手順、反復タスク |
+| 4 | **Skill更新 / 新規Skill** | 再利用可能な複数ステップのワークフロー（30行以上の手順が目安） | レビュー手順、移行手順、反復タスク |
 | 5 | **Skill-context-injector** | APM外部スキルの挙動カスタマイズ（SKILL.mdを変更せずに済む） | grilling に事前検証ステップを追加 |
 | 6 | **SubAgent更新 / 新規SubAgent** | 独立コンテキスト、専門レビュー、関心の分離が必要 | セキュリティレビュー専用エージェント |
 | 7 | **Path-scoped rule** | 特定ディレクトリ・ファイル種別・モジュールにだけ適用 | `src/adapters/` 配下のみのDB規約 |
-| 8 | **CLAUDE.md update** | 上記すべてに当てはまらず、グローバル・恒久的・短い・ほぼ毎セッション必要 | プロジェクト全体の言語設定 |
+| 8 | **Output Styles** | 役割の大きな変更（コードアシスタント→一般アシスタント等） | デフォルトのコーディング指示を完全に置き換える |
+| 9 | **append-system-prompt** | 特定の呼び出しのみに適用される追加指示（プロンプトキャッシング対応） | 特定のコーディング標準、ドメイン知識の追加 |
+| 10 | **CLAUDE.md update** | 上記すべてに当てはまらず、グローバル・恒久的・短い・ほぼ毎セッション必要 | プロジェクト全体の言語設定 |
 
-分類の判断基準:
+分類の判断基準（公式ヒントを統合）:
 
 - **メモリの問題か？** → Yes ならハーネス変更ではない（Step 2に戻る）
+- **「常にYをする」「絶対にしない」など決定的に強制すべきか？** → Yes なら Hook/CI/permission (カテゴリ3)
 - **機械的に強制できるか？** → Yes なら Hook/CI/permission (カテゴリ3)
 - **APM外部スキルの挙動を変更したいか？** → Yes なら skill-context-injector (カテゴリ5)
-- **特定パスにだけ適用か？** → Yes なら path-scoped rule (カテゴリ7)
-- **複数ステップの手順か？** → Yes なら Skill (カテゴリ4) または SubAgent (カテゴリ6)
+- **特定パスにだけ適用か？** → Yes なら path-scoped rule (カテゴリ7) またはサブディレクトリのCLAUDE.md
+- **30行以上の複数ステップの手順か？** → Yes なら Skill (カテゴリ4) または SubAgent (カテゴリ6)
 - **人間が明示的に呼び出すか？** → Yes なら slash command (カテゴリ2)
+- **役割の大きな変更か（コードアシスタント→一般アシスタント等）？** → Yes なら Output Styles (カテゴリ8)
+- **特定の呼び出しのみに適用される追加指示か？** → Yes なら append-system-prompt (カテゴリ9)
 - **一回限りか？** → Yes なら変更不要 (カテゴリ1)
-- **上記すべてNoで、グローバル・恒久的・短いか？** → CLAUDE.md (カテゴリ8)
+- **上記すべてNoで、グローバル・恒久的・短いか？** → CLAUDE.md (カテゴリ10)
 
 ### Step 6: 推奨方針の提示
 
@@ -177,14 +187,18 @@ CLAUDE.mdの変更は可能な限り最小差分にする。
 | ケース | 悪い対応 | 良い対応 |
 |--------|----------|----------|
 | Claudeがテストを実行せずにコミットした | CLAUDE.mdに「テスト実行必須」と追記 | pre-commit hookでテスト実行を強制 (カテゴリ3) |
+| Django unittestではなくpytestを使ってほしい | CLAUDE.mdに「pytestを使う」と追記 | `.claude/rules/testing.md`にpath-scoped ruleを作成 (カテゴリ7) |
+| E2Eテストが重くなりがち、テストピラミッドを意識してほしい | CLAUDE.mdに「テストピラミッドを意識する」と追記 | `.claude/rules/testing.md`に具体的な判断基準を記載 (カテゴリ7) |
 | APM外部スキル（grilling）が公式ドキュメント確認をしなかった | SKILL.mdを直接編集 | skill-context-injectorで追加コンテキストを注入 (カテゴリ5) |
 | `src/adapters/`のDB規約を守らなかった | CLAUDE.mdにDB規約を追記 | `.claude/rules/adapters.md`にpath-scoped ruleを作成 (カテゴリ7) |
-| レビュー手順が複雑で毎回忘れる | CLAUDE.mdにレビュー手順を列挙 | Skillまたはslash commandを作成 (カテゴリ2/4) |
+| レビュー手順が複雑で毎回忘れる（30行以上の手順） | CLAUDE.mdにレビュー手順を列挙 | Skillまたはslash commandを作成 (カテゴリ2/4) |
 | 今回だけ特殊な設定が必要だった | CLAUDE.mdに例外規則を追記 | 変更不要。会話内で指示するだけ (カテゴリ1) |
 | secretsをログに出力してしまった | CLAUDE.mdに「secretsを出力しない」と追記 | hookでsecrets検出を強制 + ruleで禁止パスを列挙 (カテゴリ3) |
 | セキュリティレビューの観点が足りなかった | CLAUDE.mdにレビュー観点を列挙 | 専門SubAgentを作成 (カテゴリ6) |
 | ユーザーがPython初心者で説明が難しすぎた | CLAUDE.mdに「丁寧に説明する」と追記 | User scopeのメモリにスキルレベルを記録 (メモリ) |
 | 来週リリース凍結でマージを控えたい | CLAUDE.mdに一時的な制約を追記 | プロジェクトメモリに期限付きで記録 (メモリ) |
+| コードアシスタントではなく一般アシスタントにしたい | CLAUDE.mdにロール変更指示を追記 | Output Stylesで役割を置き換える (カテゴリ8) |
+| 特定のドメイン知識を一時的に追加したい | CLAUDE.mdに追記 | append-system-promptで呼び出し時のみ追加 (カテゴリ9) |
 
 ## 避けるべき指示パターン
 
@@ -195,8 +209,16 @@ CLAUDE.mdに以下のような表現を書かない。
 - 反省文（「前回〜してしまったので」）
 - issueやPR番号への参照（「#123で起きた問題を防ぐため」）
 - Claudeが既に知っていること（言語の標準的な書き方、一般的なデザインパターン）
+- 「常に〜する」「絶対に〜しない」（→ Hookで強制すべき）
 
 これらは実行可能な指示ではない。具体的な手順、チェック項目、または機械的強制に置き換える。
+
+**公式ヒント（Anthropic公式記事より）:**
+- 「常にYをする」指示 → Hookを使用
+- 「絶対にしない」指示 → Hookまたは権限設定を使用
+- 30行以上の手順 → Skillに配置
+- API固有のルールでpaths指定なし → `paths:`でスコープ設定
+- 個人設定をプロジェクトレベルに → ユーザーレベルのローカルファイルまたはメモリを使用
 
 ## Skill命名規則
 
@@ -215,6 +237,11 @@ CLAUDE.mdに以下のような表現を書かない。
 1. `retrospecting-harness`で問題を分析し、改修提案を作る
 2. `classifying-harness`の分類ワークフローに従い、各提案の修正先を決定する
 3. ユーザー承認後に最小差分で適用する
+
+## 参考資料
+
+- [Steering Claude Code: Skills, Hooks, Rules, Subagents, and More (Anthropic公式)](https://claude.com/ja/blog/steering-claude-code-skills-hooks-rules-subagents-and-more)
+- このSKILLは上記公式記事の原則を実行可能なワークフローに落とし込んだもの
 
 ## 出力スタイル
 

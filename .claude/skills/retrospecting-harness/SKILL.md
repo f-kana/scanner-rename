@@ -93,11 +93,24 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 - 既存の path-scoped rules（`.claude/rules/**`）
 - 既存の Skill、SubAgent、slash command
 
+**外部導入パーツの書き換えには慎重になる:**
+
+Plugin、APM、NPX SKILL コマンド等で外部から導入された SKILL やその他のパーツ（SubAgent、hooks、slash commands）は、直接書き換えるとアップデート時に競合や上書きされるリスクがある。
+
+対応優先度:
+1. skill-context-injector（`.claude/hooks/skill-context-injectors/`）でカスタマイズできるか確認
+2. path-scoped rules（`.claude/rules/**`）で制約を追加できるか確認
+3. 上記で不十分な場合のみ、SKILL.md の直接編集を検討（ただしその場合も、管理方法や競合リスクをユーザーに明示して確認する）
+
 外部 APM パッケージのスキル（grilling、skill-creator、empirical-prompt-tuning など）を変更したい場合は、SKILL.md を直接編集するのではなく、skill-context-injector を優先する。
 
 ### 4. 反映先を選ぶ
 
-各学びを、`classifying-harness`スキルの分類ワークフローに従い、適切な反映先に分類する。
+各学びを、適切な反映先に分類する。
+
+**分類が複雑な場合や、CLAUDE.md への変更が含まれる場合は、`classifying-harness` スキルを明示的に呼び出して判断を委ねる。**
+
+ただし、外部 APM 導入スキルの挙動調整だけで、カスタマイズ方法が明確（skill-context-injector で対応可能）な場合は、このスキル内で完結してよい。
 
 | 反映先                | 使う条件                              |
 | ------------------ | --------------------------------- |
