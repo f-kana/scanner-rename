@@ -1,41 +1,42 @@
 {
-    "name": "scanner-rename",
-    "build": {
-        "dockerfile": "Dockerfile"
+  "name": "scanner-rename",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
     },
-    "features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "lts"
-        },
-        "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
-    },
-    "remoteUser": "vscode",
-    "runArgs": ["--userns=keep-id"],
-    "mounts": [
-        "source=claude-config-${devcontainerId},target=/home/vscode/.claude,type=volume",
-        "source=gcloud-config-${devcontainerId},target=/home/vscode/.config/gcloud,type=volume"
-    ],
-    "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.config/gcloud && uv sync && npm install && uv run apm install",
-    "remoteEnv": {
-        "CLAUDE_CODE_USE_VERTEX": "${localEnv:CLAUDE_CODE_USE_VERTEX}",
-        "CLOUD_ML_REGION": "${localEnv:CLOUD_ML_REGION}",
-        "ANTHROPIC_VERTEX_PROJECT_ID": "${localEnv:ANTHROPIC_VERTEX_PROJECT_ID}"
-    },
-    "containerEnv": {
-        "GCP_TEST_BROKER_URL": "http://host.containers.internal:8765",
-        "TZ": "Asia/Tokyo"
-    },
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-python.python",
-                "ms-python.debugpy",
-                "ms-python.vscode-pylance",
-                "charliermarsh.ruff",
-                "esbenp.prettier-vscode",
-                "ms-vscode.makefile-tools",
-                "tamasfe.even-better-toml"
-            ]
-        }
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+  "remoteUser": "vscode",
+  "runArgs": ["--userns=keep-id"],
+  "mounts": [
+    "source=claude-config-${devcontainerId},target=/home/vscode/.claude,type=volume",
+    "source=gcloud-config-${devcontainerId},target=/home/vscode/.config/gcloud,type=volume"
+  ],
+  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.config/gcloud && uv sync && npm install && uv run apm install",
+  "remoteEnv": {
+    "CLAUDE_CODE_USE_VERTEX": "${localEnv:CLAUDE_CODE_USE_VERTEX}",
+    "CLOUD_ML_REGION": "${localEnv:CLOUD_ML_REGION}",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "${localEnv:ANTHROPIC_VERTEX_PROJECT_ID}"
+  },
+  "containerEnv": {
+    "GCP_TEST_BROKER_URL": "http://host.containers.internal:8765",
+    "TZ": "Asia/Tokyo"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-containers",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "ms-vscode.makefile-tools",
+        "tamasfe.even-better-toml"
+      ]
     }
+  }
 }
