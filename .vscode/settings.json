@@ -1,12 +1,12 @@
 {
-    // Dev Containers: Use Podman instead of Docker
-    "dev.containers.dockerPath": "podman",
-
     // Python interpreter
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
 
     // Editor defaults
     "editor.formatOnSave": true,
+    "editor.hover.enabled": "on",
+    "editor.hover.delay": 100,
+    "editor.hover.sticky": false,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -17,8 +17,13 @@
         "editor.codeActionsOnSave": {
             "source.fixAll.ruff": "explicit",
             "source.organizeImports.ruff": "explicit"
-        }
+        },
+        "editor.hover.enabled": "on"
     },
+
+    // Python language server (Pylance) settings
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.typeCheckingMode": "off",
 
     // pytest
     "python.testing.pytestEnabled": true,
@@ -48,5 +53,6 @@
         "**/.pytest_cache": true,
         "**/.ruff_cache": true,
         "**/*.egg-info": true
-    }
+    },
+    "makefile.configureOnOpen": false
 }

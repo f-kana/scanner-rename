@@ -15,7 +15,7 @@
     "source=claude-config-${devcontainerId},target=/home/vscode/.claude,type=volume",
     "source=gcloud-config-${devcontainerId},target=/home/vscode/.config/gcloud,type=volume"
   ],
-  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.config/gcloud && uv sync && npm install && uv run apm install",
+  "postCreateCommand": "bash /workspaces/scanner-rename-initial-docs/.devcontainer/post-create-command.sh",
   "remoteEnv": {
     "CLAUDE_CODE_USE_VERTEX": "${localEnv:CLAUDE_CODE_USE_VERTEX}",
     "CLOUD_ML_REGION": "${localEnv:CLOUD_ML_REGION}",

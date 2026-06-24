@@ -35,3 +35,16 @@ APM（Agent Package Manager）は npm パッケージではなく、PyPI の `ap
 ### postCreateCommand 先頭の sudo chown の理由
 
 named volume は初回作成時に root 所有で作成される。`remoteUser: vscode` で実行される `gcloud auth` や Claude Code がこれらのディレクトリに書き込めるよう、所有権を修正している。
+
+## tmux の基本的な使い方
+
+Claude Code の並列実行やターミナル切り替えに便利なコマンド：
+
+- 新規セッション開始: `tmux`
+- ペインの水平分割: `Ctrl+b` `"`
+- ペインの垂直分割: `Ctrl+b` `%`
+- ペイン間の移動: `Ctrl+b` `矢印キー` または マウスクリック
+- ペイン番号の表示: `Ctrl+b` `q`
+- セッションのデタッチ: `Ctrl+b` `d`
+- セッションへのアタッチ: `tmux attach`
+- ペインのクローズ: `exit` または `Ctrl+d`

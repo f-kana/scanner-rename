@@ -82,12 +82,26 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 * 環境設定の不備（sandbox許可、permissions、hooks設定がツールチェインと合っていない）
 * 今回だけの文脈依存
 
-### 3. 反映先を選ぶ
+### 3. 既存カスタマイズ機構の確認
+
+反映先を選ぶ前に、プロジェクトに既存のカスタマイズ機構がないか確認する。
+
+確認対象：
+- `.claude/hooks/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injectors/`）
+  - APM で導入した外部スキルの挙動を SKILL.md を変更せずにカスタマイズできる
+- `.claude/settings.json` の hooks 設定
+- 既存の path-scoped rules（`.claude/rules/**`）
+- 既存の Skill、SubAgent、slash command
+
+外部 APM パッケージのスキル（grilling、skill-creator、empirical-prompt-tuning など）を変更したい場合は、SKILL.md を直接編集するのではなく、skill-context-injector を優先する。
+
+### 4. 反映先を選ぶ
 
 各学びを、`classifying-harness`スキルの分類ワークフローに従い、適切な反映先に分類する。
 
 | 反映先                | 使う条件                              |
 | ------------------ | --------------------------------- |
+| skill-context-injector | APM外部スキルの挙動をカスタマイズする（SKILL.mdを変更せずに済む） |
 | `CLAUDE.md`        | project全体で常に有効な前提・制約・重要コマンド（最後の手段） |
 | `SKILL.md`         | 特定ワークフローの手順・判断基準・進め方              |
 | `.claude/rules/**` | ファイル種別、ディレクトリ、技術スタック、特定パスに閉じた規約   |
@@ -100,7 +114,7 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 
 CLAUDE.mdへの変更を提案する場合は、`classifying-harness`スキルのCLAUDE.md change reviewチェックリストを実行する。
 
-### 4. 提案を作る
+### 5. 提案を作る
 
 最初の出力は、最大5個のatomic proposalにする。
 High / Medium / Lowを付ける。
@@ -153,7 +167,7 @@ High以外は、重要でなければまとめる。
 - `今回は反映しない`
 ```
 
-### 5. 承認後に適用する
+### 6. 承認後に適用する
 
 ユーザーが承認したproposalだけを適用する。
 
@@ -167,7 +181,7 @@ High以外は、重要でなければまとめる。
 * 可能ならeval/testも追加する
 * 広範囲・破壊的・不確実な変更は保留して確認する
 
-### 6. Skill変更時はeval化する
+### 7. Skill変更時はeval化する
 
 `.claude/skills/**/SKILL.md`を変更する場合は、可能な限り同じ失敗を検出するeval caseを作る。
 

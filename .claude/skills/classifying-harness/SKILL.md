@@ -66,9 +66,22 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 
 **このリポジトリでは:** CLAUDE.mdに「リポジトリ外のユーザースコープ設定を変更しないでください」とあるため、このスキルはProject scope内の変更のみを行う。
 
-### Step 4: Harness Change Classification
+### Step 4: 既存カスタマイズ機構の確認
 
-問題を以下の7カテゴリに分類する。
+分類に進む前に、プロジェクトに既存のカスタマイズ機構がないか確認する。
+
+確認対象：
+- `.claude/hooks/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injectors/`）
+  - APM で導入した外部スキルの挙動を SKILL.md を変更せずにカスタマイズできる
+- `.claude/settings.json` の hooks 設定
+- 既存の path-scoped rules（`.claude/rules/**`）
+- 既存の Skill、SubAgent、slash command
+
+外部 APM パッケージのスキルを変更したい場合は、SKILL.md を直接編集するのではなく、skill-context-injector を優先する。
+
+### Step 5: Harness Change Classification
+
+問題を以下の8カテゴリに分類する。
 
 | # | カテゴリ | 条件 | 例 |
 |---|---------|------|-----|
@@ -76,26 +89,28 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 | 2 | **Prompt / slash command** | 人間が明示的に呼び出す再利用可能なプロンプト | 定型レビュー手順、定型デプロイ前チェック |
 | 3 | **Hook / permission / CI** | 決定的に強制すべき制約（format、test、secrets、破壊的操作） | `git push --force` の禁止 → hookで強制 |
 | 4 | **Skill更新 / 新規Skill** | 再利用可能な複数ステップのワークフロー | レビュー手順、移行手順、反復タスク |
-| 5 | **SubAgent更新 / 新規SubAgent** | 独立コンテキスト、専門レビュー、関心の分離が必要 | セキュリティレビュー専用エージェント |
-| 6 | **Path-scoped rule** | 特定ディレクトリ・ファイル種別・モジュールにだけ適用 | `src/adapters/` 配下のみのDB規約 |
-| 7 | **CLAUDE.md update** | 上記すべてに当てはまらず、グローバル・恒久的・短い・ほぼ毎セッション必要 | プロジェクト全体の言語設定 |
+| 5 | **Skill-context-injector** | APM外部スキルの挙動カスタマイズ（SKILL.mdを変更せずに済む） | grilling に事前検証ステップを追加 |
+| 6 | **SubAgent更新 / 新規SubAgent** | 独立コンテキスト、専門レビュー、関心の分離が必要 | セキュリティレビュー専用エージェント |
+| 7 | **Path-scoped rule** | 特定ディレクトリ・ファイル種別・モジュールにだけ適用 | `src/adapters/` 配下のみのDB規約 |
+| 8 | **CLAUDE.md update** | 上記すべてに当てはまらず、グローバル・恒久的・短い・ほぼ毎セッション必要 | プロジェクト全体の言語設定 |
 
 分類の判断基準:
 
 - **メモリの問題か？** → Yes ならハーネス変更ではない（Step 2に戻る）
 - **機械的に強制できるか？** → Yes なら Hook/CI/permission (カテゴリ3)
-- **特定パスにだけ適用か？** → Yes なら path-scoped rule (カテゴリ6)
-- **複数ステップの手順か？** → Yes なら Skill (カテゴリ4) または SubAgent (カテゴリ5)
+- **APM外部スキルの挙動を変更したいか？** → Yes なら skill-context-injector (カテゴリ5)
+- **特定パスにだけ適用か？** → Yes なら path-scoped rule (カテゴリ7)
+- **複数ステップの手順か？** → Yes なら Skill (カテゴリ4) または SubAgent (カテゴリ6)
 - **人間が明示的に呼び出すか？** → Yes なら slash command (カテゴリ2)
 - **一回限りか？** → Yes なら変更不要 (カテゴリ1)
-- **上記すべてNoで、グローバル・恒久的・短いか？** → CLAUDE.md (カテゴリ7)
+- **上記すべてNoで、グローバル・恒久的・短いか？** → CLAUDE.md (カテゴリ8)
 
-### Step 5: 推奨方針の提示
+### Step 6: 推奨方針の提示
 
 分類結果と推奨する修正先を提示する。ファイル変更案を含める。
 判断に迷う場合は、最小のドラフトを提示してユーザー承認を求める。
 
-### Step 6: CLAUDE.md変更時のレビュー（カテゴリ7の場合のみ）
+### Step 7: CLAUDE.md変更時のレビュー（カテゴリ8の場合のみ）
 
 CLAUDE.mdを編集する場合、以下のレビューを必ず出力する。
 
@@ -117,7 +132,7 @@ CLAUDE.mdを編集する場合、以下のレビューを必ず出力する。
 
 CLAUDE.mdのトークン予算は200行以下が推奨。追加する前に、現在の行数を確認し、削除・統合できる既存指示がないか検討する。
 
-### Step 7: 承認後に最小差分で適用
+### Step 8: 承認後に最小差分で適用
 
 ユーザーが承認した変更だけを適用する。
 CLAUDE.mdの変更は可能な限り最小差分にする。
@@ -162,11 +177,12 @@ CLAUDE.mdの変更は可能な限り最小差分にする。
 | ケース | 悪い対応 | 良い対応 |
 |--------|----------|----------|
 | Claudeがテストを実行せずにコミットした | CLAUDE.mdに「テスト実行必須」と追記 | pre-commit hookでテスト実行を強制 (カテゴリ3) |
-| `src/adapters/`のDB規約を守らなかった | CLAUDE.mdにDB規約を追記 | `.claude/rules/adapters.md`にpath-scoped ruleを作成 (カテゴリ6) |
+| APM外部スキル（grilling）が公式ドキュメント確認をしなかった | SKILL.mdを直接編集 | skill-context-injectorで追加コンテキストを注入 (カテゴリ5) |
+| `src/adapters/`のDB規約を守らなかった | CLAUDE.mdにDB規約を追記 | `.claude/rules/adapters.md`にpath-scoped ruleを作成 (カテゴリ7) |
 | レビュー手順が複雑で毎回忘れる | CLAUDE.mdにレビュー手順を列挙 | Skillまたはslash commandを作成 (カテゴリ2/4) |
 | 今回だけ特殊な設定が必要だった | CLAUDE.mdに例外規則を追記 | 変更不要。会話内で指示するだけ (カテゴリ1) |
 | secretsをログに出力してしまった | CLAUDE.mdに「secretsを出力しない」と追記 | hookでsecrets検出を強制 + ruleで禁止パスを列挙 (カテゴリ3) |
-| セキュリティレビューの観点が足りなかった | CLAUDE.mdにレビュー観点を列挙 | 専門SubAgentを作成 (カテゴリ5) |
+| セキュリティレビューの観点が足りなかった | CLAUDE.mdにレビュー観点を列挙 | 専門SubAgentを作成 (カテゴリ6) |
 | ユーザーがPython初心者で説明が難しすぎた | CLAUDE.mdに「丁寧に説明する」と追記 | User scopeのメモリにスキルレベルを記録 (メモリ) |
 | 来週リリース凍結でマージを控えたい | CLAUDE.mdに一時的な制約を追記 | プロジェクトメモリに期限付きで記録 (メモリ) |
 

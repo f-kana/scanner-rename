@@ -20,6 +20,10 @@ Python プロジェクトのセットアップ。
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [x] **PBI-ph0-004** Claude Code Hooksの設定
 - [ ] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切るところから開始するよう開発WorkflowをUpdateする
+- [x] **PBI-ph0-006** Ruff Formatterの改善（VS Code Extensionが効いてない？）
+- [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
+- [ ] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
+- [ ] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
 
 ## Phase 1: cc-sdd 実行
 

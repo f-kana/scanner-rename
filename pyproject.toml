@@ -47,6 +47,12 @@ typeCheckingMode = "standard"
 [tool.ruff]
 line-length = 88
 src = ["src"]
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
