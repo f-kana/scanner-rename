@@ -7,7 +7,7 @@ set -euo pipefail
 shopt -s nocasematch  # Case-insensitive file extension matching
 
 INPUT=$(cat)
-FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.notebook_path // empty')
+FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.notebook_path // empty' 2>/dev/null || echo "")
 
 # File path must be present and exist
 [[ -z "$FILE" || ! -f "$FILE" ]] && exit 0

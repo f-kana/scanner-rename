@@ -36,15 +36,12 @@ APM（Agent Package Manager）は npm パッケージではなく、PyPI の `ap
 
 named volume は初回作成時に root 所有で作成される。`remoteUser: vscode` で実行される `gcloud auth` や Claude Code がこれらのディレクトリに書き込めるよう、所有権を修正している。
 
-## tmux の基本的な使い方
+## ターミナルマルチプレクサ
 
-Claude Code の並列実行やターミナル切り替えに便利なコマンド：
+DevContainer には tmux と byobu がインストールされています（zellij も今後追加予定）。3つのツールを提供する理由は、開発者がそれぞれの好みや作業スタイルに合わせて選択できるようにするためです。自動起動は設定していないため、好みのツールを明示的に起動してください（`tmux`、`byobu`、`zellij`）。
 
-- 新規セッション開始: `tmux`
-- ペインの水平分割: `Ctrl+b` `"`
-- ペインの垂直分割: `Ctrl+b` `%`
-- ペイン間の移動: `Ctrl+b` `矢印キー` または マウスクリック
-- ペイン番号の表示: `Ctrl+b` `q`
-- セッションのデタッチ: `Ctrl+b` `d`
-- セッションへのアタッチ: `tmux attach`
-- ペインのクローズ: `exit` または `Ctrl+d`
+詳細な使い方は各ツールのヘルプを参照してください：
+
+- tmux: `man tmux` または `tmux list-keys`
+- byobu: `byobu-config` または `F1` キー（byobu 起動後）
+- zellij: `zellij --help`
