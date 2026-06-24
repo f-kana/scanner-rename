@@ -1,6 +1,12 @@
 {
   "permissions": {
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "allow": [
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(git push *)"
+    ]
   },
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
