@@ -4,41 +4,34 @@
 
 開発は DevContainer 内で行う。Claude Code も DevContainer 内で実行する。
 
-## 設計意図
+## 設計判断と経緯
 
-### セキュリティ隔離
+### Podman rootful モードが必要な理由
 
-GCP 認証情報はホスト上のみに存在し、DevContainer にはマウントしない。クラウド統合テストは DevContainer から直接 Google API を呼ばず、ホスト上の GCP Test Broker（`host.containers.internal:8765`）経由で実行する。詳細は `docs/security-notes.md` と `docs/adr-candidates/0004-devcontainer-and-gcp-test-broker.md` を参照。
+DevContainer features は内部的に `RUN --mount=type=bind` を使う Dockerfile を生成する。Podman の rootless モードでは、ユーザー名前空間の UID マッピングにより bind mount されたファイルにビルド時アクセスできず、全 feature が `Permission denied` で失敗する（[devcontainers/features#755](https://github.com/devcontainers/features/issues/755)）。`runArgs` の `--userns=keep-id` は `podman run`（実行時）にしか効かず、`podman build` には無関係。
 
-### コンテナランタイム
+対策として `podman machine set --rootful` でビルドを rootful にしている。
 
-Podman（podman machine）を使用する。Docker でも動作するが、`dev.containers.dockerPath` の設定は各自の VS Code User settings で行う。リポジトリの `.vscode/settings.json` にはランタイム固有の設定を入れない。
+### gcloud CLI を Dockerfile で直接インストールしている理由
 
-Podman rootless ではファイル権限の問題を防ぐため `--userns=keep-id` を `runArgs` で指定している。
+公式の DevContainer feature は存在しない。コミュニティ feature（`ghcr.io/dhoeric/features/google-cloud-cli`）は廃止された `apt-key` コマンドに依存しており、現行の Debian ベースイメージでは `apt-key: command not found` で失敗する。Google 公式の apt リポジトリ手順（signed-by keyring 方式）で直接インストールしている。
 
-### VS Code 拡張機能の配置
+### uv を COPY --from でインストールしている理由
 
-ホスト側の `.vscode/extensions.json` には Remote Containers 拡張のみを置く。開発用拡張（Python, Ruff, Pylance, Prettier 等）は `devcontainer.json` の `customizations.vscode.extensions` で管理し、DevContainer 内に自動インストールされる。
+当初は `curl -LsSf https://astral.sh/uv/install.sh | sh` を使っていたが、このスクリプトは実行ユーザーの `$HOME/.local/bin` にインストールする。Dockerfile の RUN は root で実行されるため `/root/.local/bin` に入るが、`remoteUser: vscode` の PATH（`/home/vscode/.local/bin`）とは不一致で `uv: not found` になった。uv 公式推奨の Docker パターンである `COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/` に変更し、どのユーザーからもアクセス可能にした。
 
-### uv のインストール
+### Claude Code のインストールを feature に変更した理由
 
-Astral 公式のインストールスクリプトを Dockerfile で実行する。コミュニティ製の DevContainer feature や pip 経由ではなく、公式スクリプトを採用した。Dockerfile で `ENV PATH` を設定し、非インタラクティブシェルでも `uv` コマンドが使えるようにしている。
+当初は `postCreateCommand` で `npm install -g @anthropic-ai/claude-code` していたが、Anthropic 公式の DevContainer feature（`ghcr.io/anthropics/devcontainer-features/claude-code:1.0`）が提供されており、VS Code 拡張の自動追加や自動更新も含まれるため、feature に移行した。
 
-### Claude Code CLI
+### APM を Python dev dependency にした理由
 
-Node.js は DevContainer features 経由でインストールされるため Dockerfile のビルド時にはまだ使えない。そのため Claude Code CLI は `postCreateCommand` でグローバルインストールする。
+APM（Agent Package Manager）は npm パッケージではなく、PyPI の `apm-cli` で提供されている。`npx apm install` は動作しない。`pyproject.toml` の dev dependency に追加することで `uv sync` で自動インストールされ、バージョンも `uv.lock` でピン留めされる。
 
-### 依存関係の自動セットアップ
+### named volume でホスト認証情報をマウントしない理由
 
-`postCreateCommand` で `uv sync && npm install && npx apm install && npm install -g @anthropic-ai/claude-code` を実行し、コンテナ作成直後から開発可能な状態にする。
+プロジェクトのセキュリティ方針（`docs/security-notes.md`）により、ホストの `~/.config/gcloud/` はコンテナにマウントしない。Claude Code 公式ドキュメントも「ホストのクラウド認証ファイルのマウントを避ける」と推奨している。代わりにコンテナ内で `gcloud auth application-default login` を実行し、named volume で永続化することで rebuild 後の再認証を不要にしている。
 
-### タイムゾーン
+### postCreateCommand 先頭の sudo chown の理由
 
-日本でのみ使用するシステムのため `TZ=Asia/Tokyo` を設定している。
-
-## 環境変数
-
-| 変数名 | 用途 | デフォルト値 |
-| --- | --- | --- |
-| `GCP_TEST_BROKER_URL` | GCP Test Broker の接続先 | `http://host.containers.internal:8765` |
-| `TZ` | タイムゾーン | `Asia/Tokyo` |
+named volume は初回作成時に root 所有で作成される。`remoteUser: vscode` で実行される `gcloud auth` や Claude Code がこれらのディレクトリに書き込めるよう、所有権を修正している。

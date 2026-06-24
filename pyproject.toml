@@ -6,6 +6,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "apm-cli",
     "pyright>=1.1.410",
     "pytest>=8",
     "pytest-cov>=6",

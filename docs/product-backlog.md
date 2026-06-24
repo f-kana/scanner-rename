@@ -14,7 +14,9 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-001-3** VS Code Extensionの整備(.vscode/extensions.json) + pyright導入
 - [x] **PBI-ph0-001-4** Prettier 導入（package.json、.prettierrc、Node.js 依存）
 - [x] **PBI-ph0-001-5** Python コーディング規約の導入
-- [x] **PBI-ph0-002** DevContainer 設定（`.devcontainer/`）
+- [x] **PBI-ph0-002** DevContainer 設定（`.devcontainer/`）(初期設定まで)
+- [x] **PBI-ph0-002-1** DevContainerの起動、基本動作の動作確認
+- [ ] **PBI-ph0-002-2** DevContainer内でのGitHub認証設定（Push/Pull）
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [ ] **PBI-ph0-004** Claude Code Hooksの設定
 
