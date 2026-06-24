@@ -1,0 +1,27 @@
+# Pre-commit hooks configuration
+# See https://pre-commit.com for more information
+
+repos:
+  # Ruff: Fast Python linter and formatter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.19
+    hooks:
+      # Run linter with auto-fix (must run before ruff-format)
+      - id: ruff-check
+        args: [--fix]
+      # Run formatter
+      - id: ruff-format
+
+  # Prettier: Formatter for Markdown, JSON, YAML
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.8.4
+    hooks:
+      - id: prettier
+        types_or: [markdown, json, yaml]
+
+  # Pyright: Type checker (manual stage - run with --hook-stage manual)
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.390
+    hooks:
+      - id: pyright
+        stages: [manual]
