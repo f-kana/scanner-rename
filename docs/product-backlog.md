@@ -19,6 +19,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-002-2** DevContainer内でのGitHub認証設定（Push/Pull）
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [x] **PBI-ph0-004** Claude Code Hooksの設定
+- [ ] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切るところから開始するよう開発WorkflowをUpdateする
 
 ## Phase 1: cc-sdd 実行
 
