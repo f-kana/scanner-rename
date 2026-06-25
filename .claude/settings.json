@@ -2,10 +2,31 @@
   "permissions": {
     "defaultMode": "auto",
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Read",
+      "Edit(*.md)",
+      "Edit(*.py)",
+      "Edit(*.json)",
+      "Edit(*.yaml)",
+      "Edit(*.toml)",
+      "Write(tmp/**)",
+      "Bash(git *)",
+      "Bash(pytest *)",
+      "Bash(uv *)",
+      "Bash(ruff *)"
     ],
     "deny": [
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(**/.env*)",
+      "Read(**/secrets/**)",
+      "Read(**/*credential*)",
+      "Read(**/*token*)",
+      "Bash(gcloud auth *)",
+      "Bash(env)",
+      "Bash(printenv)"
     ]
   },
   "hooks": {
@@ -43,26 +64,6 @@
     ]
   },
   "sandbox": {
-    "enabled": true,
-    "autoAllowBashIfSandboxed": true,
-    "network": {
-      "allowedDomains": [
-        "github.com",
-        "api.github.com",
-        "githubusercontent.com",
-        "registry.npmjs.org",
-        "pypi.org",
-        "files.pythonhosted.org"
-      ]
-    },
-    "filesystem": {
-      "allowWrite": [
-        "."
-      ],
-      "denyWithinAllow": [
-        ".claude/settings.json",
-        ".claude/settings.local.json"
-      ]
-    }
+    "enabled": false
   }
 }
