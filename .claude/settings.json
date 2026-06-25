@@ -8,9 +8,6 @@
       "Bash(git push *)"
     ]
   },
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -60,10 +57,11 @@
     },
     "filesystem": {
       "allowWrite": [
-        ".claude/skills",
-        ".claude/hooks",
-        ".claude/rules",
-        "tmp"
+        "."
+      ],
+      "denyWithinAllow": [
+        ".claude/settings.json",
+        ".claude/settings.local.json"
       ]
     }
   }
