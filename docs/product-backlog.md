@@ -23,7 +23,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-006** Ruff Formatterの改善（VS Code Extensionが効いてない？）
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
-- [ ] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
+- [x] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
 - [ ] **PBI-ph0-008** 長いLLM処理が終わった or 人間への承認依頼で長い処理が中断した場合に、効果音が出るようにしたい。なぜなら、タスクの終わり/中断に僕が気づけるからだ。
 
 ## Phase 1: cc-sdd 実行

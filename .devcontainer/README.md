@@ -38,10 +38,14 @@ named volume は初回作成時に root 所有で作成される。`remoteUser: 
 
 ## ターミナルマルチプレクサ
 
-DevContainer には tmux と byobu がインストールされています（zellij も今後追加予定）。3つのツールを提供する理由は、開発者がそれぞれの好みや作業スタイルに合わせて選択できるようにするためです。自動起動は設定していないため、好みのツールを明示的に起動してください（`tmux`、`byobu`、`zellij`）。
+DevContainer には tmux、byobu、zellij がインストールされています。3つのツールを提供する理由は、開発者がそれぞれの好みや作業スタイルに合わせて選択できるようにするためです。自動起動は設定していないため、好みのツールを明示的に起動してください（`tmux`、`byobu`、`zellij`）。
 
 詳細な使い方は各ツールのヘルプを参照してください：
 
 - tmux: `man tmux` または `tmux list-keys`
 - byobu: `byobu-config` または `F1` キー（byobu 起動後）
 - zellij: `zellij --help`
+
+### 個人設定の永続化
+
+各マルチプレクサの設定（キーバインド、テーマ等）は開発者ごとに異なるため、プロジェクトとしてデフォルト設定は用意していません。個人設定を DevContainer の rebuild 後も維持するには、VS Code の [dotfiles リポジトリ機能](https://containers.dev/supporting#dotfiles) を使ってください。

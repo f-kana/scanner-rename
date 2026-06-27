@@ -11,3 +11,9 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
         google-cloud-cli \
         byobu \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN ARCH=$(uname -m) \
+    && ZELLIJ_VERSION=$(curl -fsSL https://api.github.com/repos/zellij-org/zellij/releases/latest | grep '"tag_name"' | sed 's/.*"v\(.*\)".*/\1/') \
+    && curl -fsSL "https://github.com/zellij-org/zellij/releases/download/v${ZELLIJ_VERSION}/zellij-${ARCH}-unknown-linux-musl.tar.gz" \
+        | tar xz -C /usr/local/bin \
+    && zellij --version
