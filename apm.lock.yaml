@@ -1,78 +1,104 @@
-lockfile_version: '1'
-generated_at: '2026-06-22T12:56:04.274943+00:00'
+lockfile_version: "1"
+generated_at: "2026-06-28T12:31:21.201903+00:00"
 apm_version: 0.21.0
 dependencies:
-- repo_url: anthropics/skills
-  host: github.com
-  resolved_commit: 57546260929473d4e0d1c1bb75297be2fdfa1949
-  virtual_path: skills/skill-creator
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .claude/skills/skill-creator
-  - .claude/skills/skill-creator/LICENSE.txt
-  - .claude/skills/skill-creator/SKILL.md
-  - .claude/skills/skill-creator/agents/analyzer.md
-  - .claude/skills/skill-creator/agents/comparator.md
-  - .claude/skills/skill-creator/agents/grader.md
-  - .claude/skills/skill-creator/assets/eval_review.html
-  - .claude/skills/skill-creator/eval-viewer/generate_review.py
-  - .claude/skills/skill-creator/eval-viewer/viewer.html
-  - .claude/skills/skill-creator/references/schemas.md
-  - .claude/skills/skill-creator/scripts/__init__.py
-  - .claude/skills/skill-creator/scripts/aggregate_benchmark.py
-  - .claude/skills/skill-creator/scripts/generate_report.py
-  - .claude/skills/skill-creator/scripts/improve_description.py
-  - .claude/skills/skill-creator/scripts/package_skill.py
-  - .claude/skills/skill-creator/scripts/quick_validate.py
-  - .claude/skills/skill-creator/scripts/run_eval.py
-  - .claude/skills/skill-creator/scripts/run_loop.py
-  - .claude/skills/skill-creator/scripts/utils.py
-  deployed_file_hashes:
-    .claude/skills/skill-creator/LICENSE.txt: sha256:bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362
-    .claude/skills/skill-creator/SKILL.md: sha256:dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf
-    .claude/skills/skill-creator/agents/analyzer.md: sha256:bf68f4cac5a56c673a928c2e6d619586c5b93ea364026ab37547772cb45a663a
-    .claude/skills/skill-creator/agents/comparator.md: sha256:fe1fc9787c495d864c5d6eada47396478572325fde1b33a96d78bf4b849b7a3e
-    .claude/skills/skill-creator/agents/grader.md: sha256:57134da0c1a4eea33fbd74a1c9c44aa814f07d6bc64de303edb586f941e5d21a
-    .claude/skills/skill-creator/assets/eval_review.html: sha256:ce477dcc74dc1c0d1d3352646a79167b5a63634e936b1019160025065974e452
-    .claude/skills/skill-creator/eval-viewer/generate_review.py: sha256:fc9d1b9243fe5ab6012ebd579bd76d0035de1b79fd3b969de114defab26478fb
-    .claude/skills/skill-creator/eval-viewer/viewer.html: sha256:a53213426ee1100441d701a3a0d49cda7a842f992d2c36463f4d3cc0258575fa
-    .claude/skills/skill-creator/references/schemas.md: sha256:8e8876180a8989b406a4d3edddf875b04cdfd5805cc8616686d552b11ce4455f
-    .claude/skills/skill-creator/scripts/__init__.py: sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-    .claude/skills/skill-creator/scripts/aggregate_benchmark.py: sha256:123ef128ea5ccc01a4b1ac212ef5567f21e9c13d3d240609780beeb3200c49aa
-    .claude/skills/skill-creator/scripts/generate_report.py: sha256:13df7118a3c50c83c4c3250a606d5f2b20b25a3d44cbc392b3d669ec75281453
-    .claude/skills/skill-creator/scripts/improve_description.py: sha256:87d864570220b699fac52da309d2d6efdb060647bfebc74f768128e646accf80
-    .claude/skills/skill-creator/scripts/package_skill.py: sha256:1a33059b0db1ef73375d46d513e5ea81369d2e8838c970597b0d52ddef8d1c0f
-    .claude/skills/skill-creator/scripts/quick_validate.py: sha256:67cf5703402013936c8fb75ad6a1afecd8841d45cc5e606b634eb05825fde365
-    .claude/skills/skill-creator/scripts/run_eval.py: sha256:43e3b8f80dbf69c343967ba77e268fae991d9fa3ed68b32a0ff02532cd48657f
-    .claude/skills/skill-creator/scripts/run_loop.py: sha256:7bd6f674203168520517eec94c55f493c0d154339b061b4d7c0f0dad187d0f21
-    .claude/skills/skill-creator/scripts/utils.py: sha256:3af8ae62c40c73ab712207436a0d9a981e845f25c5a7040229eb189cc8e45bb1
-  content_hash: sha256:b2bfe91d69ca99994c0566baede889e7d2b9bb8791c6b6106c5d387392f717f6
-- repo_url: mattpocock/skills
-  host: github.com
-  resolved_commit: 2454c95dc305c158b21a0cdafeb728879dd0359a
-  resolved_ref: v1.0.1
-  virtual_path: skills/productivity/grilling
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .claude/skills/grilling
-  - .claude/skills/grilling/SKILL.md
-  deployed_file_hashes:
-    .claude/skills/grilling/SKILL.md: sha256:fe00af3e1815f97c0a7644605479328a726b5cd95ba6ef56a4be2a92fae6c20f
-  content_hash: sha256:ef685a6fa0bbe73b05bbd8dc1ec97258191587f07c6aa7dbc9006675ceb8f90f
-- repo_url: mizchi/skills
-  host: github.com
-  resolved_commit: 89c1b34018ba0d85a770c065ba22f83a8d004d34
-  resolved_ref: 89c1b340
-  virtual_path: meta/empirical-prompt-tuning
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .claude/skills/empirical-prompt-tuning
-  - .claude/skills/empirical-prompt-tuning/SKILL-ja.md
-  - .claude/skills/empirical-prompt-tuning/SKILL.md
-  deployed_file_hashes:
-    .claude/skills/empirical-prompt-tuning/SKILL-ja.md: sha256:0a38d830802c2e08a7faca13928fedf6911e00b896946b4b03910d662de6dea5
-    .claude/skills/empirical-prompt-tuning/SKILL.md: sha256:252418e7ef022981d2dda2e3ec57fa1c786d30af68c50b7e062edf1d7361b0cb
-  content_hash: sha256:0caa36857ba4e1f7193fa9ee3e22cac38d7e9787eda95e1726d4a39e40fb9479
+  - repo_url: anthropics/skills
+    host: github.com
+    resolved_commit: 57546260929473d4e0d1c1bb75297be2fdfa1949
+    virtual_path: skills/skill-creator
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/skill-creator
+      - .claude/skills/skill-creator/LICENSE.txt
+      - .claude/skills/skill-creator/SKILL.md
+      - .claude/skills/skill-creator/agents/analyzer.md
+      - .claude/skills/skill-creator/agents/comparator.md
+      - .claude/skills/skill-creator/agents/grader.md
+      - .claude/skills/skill-creator/assets/eval_review.html
+      - .claude/skills/skill-creator/eval-viewer/generate_review.py
+      - .claude/skills/skill-creator/eval-viewer/viewer.html
+      - .claude/skills/skill-creator/references/schemas.md
+      - .claude/skills/skill-creator/scripts/__init__.py
+      - .claude/skills/skill-creator/scripts/aggregate_benchmark.py
+      - .claude/skills/skill-creator/scripts/generate_report.py
+      - .claude/skills/skill-creator/scripts/improve_description.py
+      - .claude/skills/skill-creator/scripts/package_skill.py
+      - .claude/skills/skill-creator/scripts/quick_validate.py
+      - .claude/skills/skill-creator/scripts/run_eval.py
+      - .claude/skills/skill-creator/scripts/run_loop.py
+      - .claude/skills/skill-creator/scripts/utils.py
+    deployed_file_hashes:
+      .claude/skills/skill-creator/LICENSE.txt: sha256:bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362
+      .claude/skills/skill-creator/SKILL.md: sha256:dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf
+      .claude/skills/skill-creator/agents/analyzer.md: sha256:bf68f4cac5a56c673a928c2e6d619586c5b93ea364026ab37547772cb45a663a
+      .claude/skills/skill-creator/agents/comparator.md: sha256:fe1fc9787c495d864c5d6eada47396478572325fde1b33a96d78bf4b849b7a3e
+      .claude/skills/skill-creator/agents/grader.md: sha256:57134da0c1a4eea33fbd74a1c9c44aa814f07d6bc64de303edb586f941e5d21a
+      .claude/skills/skill-creator/assets/eval_review.html: sha256:ce477dcc74dc1c0d1d3352646a79167b5a63634e936b1019160025065974e452
+      .claude/skills/skill-creator/eval-viewer/generate_review.py: sha256:fc9d1b9243fe5ab6012ebd579bd76d0035de1b79fd3b969de114defab26478fb
+      .claude/skills/skill-creator/eval-viewer/viewer.html: sha256:a53213426ee1100441d701a3a0d49cda7a842f992d2c36463f4d3cc0258575fa
+      .claude/skills/skill-creator/references/schemas.md: sha256:8e8876180a8989b406a4d3edddf875b04cdfd5805cc8616686d552b11ce4455f
+      .claude/skills/skill-creator/scripts/__init__.py: sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      .claude/skills/skill-creator/scripts/aggregate_benchmark.py: sha256:123ef128ea5ccc01a4b1ac212ef5567f21e9c13d3d240609780beeb3200c49aa
+      .claude/skills/skill-creator/scripts/generate_report.py: sha256:13df7118a3c50c83c4c3250a606d5f2b20b25a3d44cbc392b3d669ec75281453
+      .claude/skills/skill-creator/scripts/improve_description.py: sha256:87d864570220b699fac52da309d2d6efdb060647bfebc74f768128e646accf80
+      .claude/skills/skill-creator/scripts/package_skill.py: sha256:1a33059b0db1ef73375d46d513e5ea81369d2e8838c970597b0d52ddef8d1c0f
+      .claude/skills/skill-creator/scripts/quick_validate.py: sha256:67cf5703402013936c8fb75ad6a1afecd8841d45cc5e606b634eb05825fde365
+      .claude/skills/skill-creator/scripts/run_eval.py: sha256:43e3b8f80dbf69c343967ba77e268fae991d9fa3ed68b32a0ff02532cd48657f
+      .claude/skills/skill-creator/scripts/run_loop.py: sha256:7bd6f674203168520517eec94c55f493c0d154339b061b4d7c0f0dad187d0f21
+      .claude/skills/skill-creator/scripts/utils.py: sha256:3af8ae62c40c73ab712207436a0d9a981e845f25c5a7040229eb189cc8e45bb1
+    content_hash: sha256:b2bfe91d69ca99994c0566baede889e7d2b9bb8791c6b6106c5d387392f717f6
+  - repo_url: mattpocock/skills
+    host: github.com
+    resolved_commit: 2454c95dc305c158b21a0cdafeb728879dd0359a
+    resolved_ref: v1.0.1
+    virtual_path: skills/productivity/grilling
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/grilling
+      - .claude/skills/grilling/SKILL.md
+    deployed_file_hashes:
+      .claude/skills/grilling/SKILL.md: sha256:fe00af3e1815f97c0a7644605479328a726b5cd95ba6ef56a4be2a92fae6c20f
+    content_hash: sha256:ef685a6fa0bbe73b05bbd8dc1ec97258191587f07c6aa7dbc9006675ceb8f90f
+  - repo_url: mizchi/skills
+    host: github.com
+    resolved_commit: 89c1b34018ba0d85a770c065ba22f83a8d004d34
+    resolved_ref: 89c1b340
+    virtual_path: meta/empirical-prompt-tuning
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/empirical-prompt-tuning
+      - .claude/skills/empirical-prompt-tuning/SKILL-ja.md
+      - .claude/skills/empirical-prompt-tuning/SKILL.md
+    deployed_file_hashes:
+      .claude/skills/empirical-prompt-tuning/SKILL-ja.md: sha256:0a38d830802c2e08a7faca13928fedf6911e00b896946b4b03910d662de6dea5
+      .claude/skills/empirical-prompt-tuning/SKILL.md: sha256:252418e7ef022981d2dda2e3ec57fa1c786d30af68c50b7e062edf1d7361b0cb
+    content_hash: sha256:0caa36857ba4e1f7193fa9ee3e22cac38d7e9787eda95e1726d4a39e40fb9479
+  - repo_url: obra/superpowers
+    host: github.com
+    resolved_commit: 896224c4b1879920ab573417e68fd51d2ccc9072
+    resolved_ref: v6.0.3
+    virtual_path: skills/finishing-a-development-branch
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/finishing-a-development-branch
+      - .claude/skills/finishing-a-development-branch/SKILL.md
+    deployed_file_hashes:
+      .claude/skills/finishing-a-development-branch/SKILL.md: sha256:e6d4a812de900d33c6eacfb40747f99427f25c304a7b7099120f9373b115a47f
+    content_hash: sha256:aa2632ed96df59c36348bd8f8ec1ff0fb0c5cc68b60691834687bf4cedc6be3f
+  - repo_url: obra/superpowers
+    host: github.com
+    resolved_commit: 896224c4b1879920ab573417e68fd51d2ccc9072
+    resolved_ref: v6.0.3
+    virtual_path: skills/using-git-worktrees
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/using-git-worktrees
+      - .claude/skills/using-git-worktrees/SKILL.md
+    deployed_file_hashes:
+      .claude/skills/using-git-worktrees/SKILL.md: sha256:e2c3ec142e52868a51af246c620cd76ab648dcf27d6900d47e6ffd07159a9794
+    content_hash: sha256:212ad917e5543e84ea3adf4e3fab537675db976fdab05d4de432870e38b49e80

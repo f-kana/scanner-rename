@@ -11,6 +11,7 @@
       "Edit(*.yaml)",
       "Edit(*.toml)",
       "Write(tmp/**)",
+      "Bash(touch *)",
       "Bash(git *)",
       "Bash(pytest *)",
       "Bash(uv *)",
@@ -22,7 +23,9 @@
       "Edit(**/settings.local.json)",
       "Write(**/settings.json)",
       "Write(**/settings.local.json)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(* install *)",
+      "Bash(* uninstall *)"
     ],
     "deny": [
       "Read(~/.config/gcloud/**)",

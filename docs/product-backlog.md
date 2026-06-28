@@ -19,7 +19,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-002-2** DevContainer内でのGitHub認証設定（Push/Pull）
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [x] **PBI-ph0-004** Claude Code Hooksの設定
-- [ ] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切る+worktreeするところから開始するよう開発WorkflowをUpdateする
+- [~] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切る+worktreeするところから開始するよう開発WorkflowをUpdateする
 - [x] **PBI-ph0-006** Ruff Formatterの改善（VS Code Extensionが効いてない？）
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
@@ -30,7 +30,8 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-011** cc-sddの導入、最低限の初期設定。cc-sddの流儀に併せたSKILLファイル等の再配置が必要なら。
 - [x] **PBI-ph0-011-1** cc-sdd仕様リファレンスの整備（docs/cc-sdd/配下に reference.md, faq.md を配置、CLAUDE.mdから参照）
 - [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
-- [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー。
+- [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
+- [ ] **PBI-ph0-013** skill-context-injectorの微修正。
 
 ## Phase 1: cc-sdd 実行
 
@@ -50,6 +51,7 @@ Python プロジェクトのセットアップ。
 - [ ] **PBI-ph2-003** 命名エンジン（抽出メタデータからファイル名を生成）
 - [ ] **PBI-ph2-004** 重複サフィックスとサニタイズ
 - [ ] **PBI-ph2-005** ユニットテスト
+- [ ] **PBI-ph2-006** cc-sddの上位に置くSKILL: development-workflowの作成。
 
 ## Phase 3: ポート／アダプタとフェイク統合テスト
 
@@ -74,3 +76,38 @@ Mac ホスト側で動作するテストブローカーの最小実装。
 - [ ] **PBI-ph6-001** Cloud Run Job（Dockerfile、エントリポイント）
 - [ ] **PBI-ph6-002** 構造化ログと Cloud Monitoring ログベースアラート
 - [ ] **PBI-ph6-003** Cloud Scheduler による定期実行
+
+--
+
+# PBI詳細
+
+詳細を補足する必要のあるPBIについて、個別に記述する。
+SDDでSpec/Requirementを定義するまでの暫定的な情報置き場であり、
+Spec/Requirement作成時にここからは消す。
+
+## PBI-ph2-006
+
+cc-sddの上位のdevelopment-workflowの作成。
+ユーザがこれを実行したら、下記を順に実行するような、cc-sddの外側の開発プロセス・手順を定義したSKILL
+
+1. pbi: tracking-pbiでPBIに着手
+2. Git: featureブランチを切ってWorktreeを作成
+3. 通常のcc-sdd
+4. 将来的に、CI PipelineとCD Pipelineの正常/異常終了確認と異常時対応。一旦はSKIP。
+5. Git: mainへのマージ
+6. pbi: tracking-pbiでPBIクローズ
+7. retrospecting-\* スキルで振り返りと改善
+
+## PBI-ph0-013
+
+下記のような構成にしたい。関連する設定も修正のこと。作業が終わったらこのセクションも消してOK。
+
+```
+skill-context-injectorのディレクトリ構造修正
+.claude/hooks/skill-context-injector/
+  skill-context-injector.sh
+  context/
+    grilling.md
+    skill-creator.md
+    ...
+```
