@@ -43,6 +43,8 @@ if [ -n "$EFFORT" ]; then
     printf " \033[0;33m[⚡%s]\033[0m" "$EFFORT"
 fi
 printf " | %dk/%dk=%s%% | " "$USED_K" "$MAX_K" "$USED_PCT"
+printf "\033[0;36m\$%.2f\033[0m " "$TOTAL_COST"
+printf "\033[0;36m%dm%ds\033[0m | " "$MINS" "$SECS"
 printf "\033[1;34m%s/\033[0m" "$DIR_BASENAME"
 if [ -n "$branch" ]; then
     printf " \033[0;36m(\033[1;31m%s%s\033[0;36m)\033[0m" "$branch" "$dirty"
