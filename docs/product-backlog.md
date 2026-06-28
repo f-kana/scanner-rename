@@ -2,7 +2,7 @@
 
 このドキュメントは cc-sdd 実行前の大きな作業フェーズと PBI を記録します。
 
-cc-sdd が正規の `spec.md`、`design.md`、`tasks.md` を生成した後は、それらが正となります。このドキュメントは歴史的コンテキストとして扱ってください。
+cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した後は、それらが正となります。このドキュメントは歴史的コンテキストとして扱ってください。
 
 ## Phase 0: プロジェクト骨格
 
@@ -25,6 +25,12 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
 - [x] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
 - [ ] **PBI-ph0-008** 長いLLM処理が終わった or 人間への承認依頼で長い処理が中断した場合に、効果音が出るようにしたい。なぜなら、タスクの終わり/中断に僕が気づけるからだ。
+- [ ] **PBI-ph0-009** Secret scanning の導入（pre-commit に gitleaks を追加）。認証情報隔離は整備済だが、git commit レベルでの自動検出がない。
+- [ ] **PBI-ph0-010** Conventional Commits の導入（commitlint + commit-msg hook）。コミットメッセージの統一フォーマット化。
+- [x] **PBI-ph0-011** cc-sddの導入、最低限の初期設定。cc-sddの流儀に併せたSKILLファイル等の再配置が必要なら。
+- [x] **PBI-ph0-011-1** cc-sdd仕様リファレンスの整備（docs/cc-sdd/配下に reference.md, faq.md を配置、CLAUDE.mdから参照）
+- [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
+- [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー。
 
 ## Phase 1: cc-sdd 実行
 
@@ -33,7 +39,7 @@ Python プロジェクトのセットアップ。
 ここから先は cc-sdd の成果物が作業の正となる。
 
 - [ ] **PBI-ph1-001** cc-sdd の実行
-- [ ] **PBI-ph1-002** 生成された `spec.md`、`design.md`、`tasks.md` のレビュー
+- [ ] **PBI-ph1-002** 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー
 
 ## Phase 2: コアドメインロジック
 
