@@ -32,6 +32,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
 - [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
 - [ ] **PBI-ph0-013** skill-context-injectorの微修正。
+- [ ] **PBI-ph0-014** DevContaienrへのghコマンドの導入。
 
 ## Phase 1: cc-sdd 実行
 
