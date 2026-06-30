@@ -1,7 +1,7 @@
 #!/bin/bash
 # スキル固有コンテキストの注入ディスパッチャ。
 # 外部から導入したSKILLで、SKILL.mdに手を加えずとも該当SKILLの挙動を微修正するために作った。
-# skill-context-injectors/<skill名>.md にプロンプト文を置くだけで、additionalContextとして注入される。
+# context/<skill名>.md にプロンプト文を置くだけで、additionalContextとして注入される。
 # 対応イベント:
 #   - UserPromptExpansion: ユーザーが /skillname と直接入力した場合
 #   - PreToolUse (Skill): アシスタントがSkillツールを呼び出した場合
@@ -26,7 +26,7 @@ if [[ -z "$SKILL" ]]; then
   exit 0
 fi
 
-PROMPT_FILE="$SCRIPT_DIR/skill-context-injectors/$SKILL.md"
+PROMPT_FILE="$SCRIPT_DIR/context/$SKILL.md"
 
 if [[ -f "$PROMPT_FILE" ]]; then
   MSG=$(cat "$PROMPT_FILE")
