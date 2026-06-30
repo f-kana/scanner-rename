@@ -1,0 +1,25 @@
+title = "gitleaks config"
+minVersion = "v8.25.0"
+
+[extend]
+useDefault = true
+
+[allowlist]
+paths = [
+  '''gitleaks\.toml$''',
+  '''\.env\.example$''',
+  '''tmp/''',
+  '''\.venv/''',
+  '''node_modules/''',
+  '''\.claude/worktrees/.*\.md$''',
+]
+
+regexes = [
+  '''\$\{?[A-Z_]+\}?''',
+]
+
+stopwords = [
+  "example",
+  "dummy",
+  "placeholder",
+]
