@@ -28,8 +28,9 @@ token.json
 application_default_credentials.json
 secrets/
 
-# Claude Code local settings (personal, not shared)
+# Claude Code local settings and worktrees (personal, not shared)
 .claude/settings.local.json
+.claude/worktrees/
 
 
 ###################################################################################################
