@@ -1,14 +1,14 @@
 ---
 name: tracking-pbi
 description: |
-  PBI（プロダクトバックログアイテム）の状態を docs/product-backlog.md 上で管理する。
-  PBI の作業開始時に [~]（進行中）、完了時に [x] に更新する。
+  PBI（プロダクトバックログアイテム）のステータスを docs/product-backlog.md 上で更新する。
+  ステータス更新単体で使う場合に限る。
+  開発作業を伴う PBI 着手（「do PBI-xxx」「PBI-xxx をやる」等）には、
+  このスキルではなく my-development-workflow を使うこと。
   以下のような場面で使う:
-  - 「do PBI-xxx」「PBI-xxx をやる」と言われた時 → 開始マーク [~] をつけてから作業に入る
   - PBI の作業が完了した時 → 完了マーク [x] をつける
-  - 「PBI-xxx を開始」「start PBI-xxx」→ 開始マーク [~]
   - 「PBI-xxx を完了」「complete PBI-xxx」→ 完了マーク [x]
-  PBI ID が会話に登場したら、このスキルの出番である可能性が高い。
+  - my-development-workflow の内部から呼ばれる（開始・完了マーク）
 ---
 
 # PBI 状態管理
