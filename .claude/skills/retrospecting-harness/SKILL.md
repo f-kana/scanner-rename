@@ -87,7 +87,7 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 反映先を選ぶ前に、プロジェクトに既存のカスタマイズ機構がないか確認する。
 
 確認対象：
-- `.claude/hooks/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injectors/`）
+- `.claude/hooks/skill-context-injector/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injector/context/`）
   - APM で導入した外部スキルの挙動を SKILL.md を変更せずにカスタマイズできる
 - `.claude/settings.json` の hooks 設定
 - 既存の path-scoped rules（`.claude/rules/**`）
@@ -112,7 +112,7 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 Plugin、APM、NPX SKILL コマンド等で外部から導入された SKILL やその他のパーツ（SubAgent、hooks、slash commands）は、直接書き換えるとアップデート時に競合や上書きされるリスクがある。
 
 対応優先度:
-1. skill-context-injector（`.claude/hooks/skill-context-injectors/`）でカスタマイズできるか確認
+1. skill-context-injector（`.claude/hooks/skill-context-injector/context/`）でカスタマイズできるか確認
 2. path-scoped rules（`.claude/rules/**`）で制約を追加できるか確認
 3. 上記で不十分な場合のみ、SKILL.md の直接編集を検討（ただしその場合も、管理方法や競合リスクをユーザーに明示して確認する）
 
@@ -142,6 +142,10 @@ Plugin、APM、NPX SKILL コマンド等で外部から導入された SKILL や
 CLAUDE.mdへの変更を提案する場合は、`classifying-harness`スキルのCLAUDE.md change reviewチェックリストを実行する。
 
 ### 5. 提案を作る
+
+**前提条件:** スキルの変更を含む提案を書く前に、必ず Step 3 の外部導入パーツ判定を完了させること。
+判定を済ませていない状態で「context injector 経由」「SKILL.md 直接編集」などの反映先を proposal に書いてはならない。
+自作スキルに context injector を提案する、外部スキルを直接編集する、といった誤分類が起きるのは判定を省略したときである。
 
 最初の出力は、最大5個のatomic proposalにする。
 High / Medium / Lowを付ける。
