@@ -127,6 +127,12 @@ Plugin、APM、NPX SKILL コマンド等で外部から導入された SKILL や
 
 各学びを、適切な反映先に分類する。
 
+**複数スキルへの波及確認:** 改善対象が `kiro-*` など同一ファミリーに属する複数スキルに共通する問題の場合、個別の skill-context-injector ファイルを量産するより CLAUDE.md への1行追加が DRY になりうる。以下の手順で確認する。
+
+1. 同ファミリーの他スキル（例: `kiro-impl` → `kiro-spec-status`、`kiro-validate-impl` 等）にも同じ問題が起きうるかチェックする
+2. 複数スキルに共通するなら、`classifying-harness` を呼び出して CLAUDE.md 反映の適否を判断する
+3. 1スキルにしか当てはまらないことが確認できたら、そのスキルの context-injector または SKILL.md を対象にする
+
 **分類が複雑な場合や、CLAUDE.md への変更が含まれる場合は、`classifying-harness` スキルを明示的に呼び出して判断を委ねる。**
 
 ただし、外部 APM 導入スキルの挙動調整だけで、カスタマイズ方法が明確（skill-context-injector で対応可能）な場合は、このスキル内で完結してよい。
