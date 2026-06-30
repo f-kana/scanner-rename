@@ -19,7 +19,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-002-2** DevContainer内でのGitHub認証設定（Push/Pull）
 - [ ] **PBI-ph0-003** CI の最小構成（lint + unit test）
 - [x] **PBI-ph0-004** Claude Code Hooksの設定
-- [~] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切る+worktreeするところから開始するよう開発WorkflowをUpdateする
+- [x] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切る+worktreeするところから開始するよう開発WorkflowをUpdateする
 - [x] **PBI-ph0-006** Ruff Formatterの改善（VS Code Extensionが効いてない？）
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
@@ -33,6 +33,7 @@ Python プロジェクトのセットアップ。
 - [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
 - [ ] **PBI-ph0-013** skill-context-injectorの微修正。
 - [x] **PBI-ph0-014** DevContaienrへのghコマンドの導入。
+- [ ] **PBI-ph0-015** cc-sdd成果物（MD）のHTML閲覧環境の整備。MDファイルの可読性が低いため、HTML等で閲覧できる仕組みを導入する。複数方式（pandoc、grip、VS Code Preview等）を比較検討する。
 
 ## Phase 1: cc-sdd 実行
 

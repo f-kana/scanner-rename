@@ -5,6 +5,7 @@
     "allow": [
       "WebSearch",
       "Read",
+      "Skill",
       "Edit(*.md)",
       "Edit(*.py)",
       "Edit(*.json)",
@@ -16,8 +17,10 @@
       "Bash(pytest *)",
       "Bash(uv *)",
       "Bash(ruff *)",
-      "Bash(uname *)"
+      "Bash(uname *)",
+      "Bash(cat > **/.kiro/specs/*/spec.json)"
     ],
+    "additionalDirectories": [".claude/worktrees"],
     "ask": [
       "Edit(**/settings.json)",
       "Edit(**/settings.local.json)",

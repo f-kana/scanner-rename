@@ -93,6 +93,20 @@ description: Analyzes Claude Code sessions with misalignment, repeated correctio
 - 既存の path-scoped rules（`.claude/rules/**`）
 - 既存の Skill、SubAgent、slash command
 
+#### 外部導入パーツの判定手順
+
+以下の順で確認：
+
+1. `apm.yml` の dependencies に対象が含まれているか（例: `mizchi/skills/meta/empirical-prompt-tuning`）
+2. `apm_modules/` に該当パッケージが存在するか
+3. `.devcontainer/post-create-command.sh` に `apm install`、`npx cc-sdd` 等があるか
+4. `.devcontainer/Dockerfile` に外部パッケージインストールがあるか
+5. `node_modules/.cache/_npx/` に npx パッケージが存在するか
+6. `CLAUDE.md` に外部パッケージの言及があるか（例: `gotalab/cc-sdd`）
+7. `.claude/skills/{skill-name}/` に LICENSE、package.json 等があるか
+
+いずれかで外部導入と判明した場合、以下の対応優先度を適用。
+
 **外部導入パーツの書き換えには慎重になる:**
 
 Plugin、APM、NPX SKILL コマンド等で外部から導入された SKILL やその他のパーツ（SubAgent、hooks、slash commands）は、直接書き換えるとアップデート時に競合や上書きされるリスクがある。
