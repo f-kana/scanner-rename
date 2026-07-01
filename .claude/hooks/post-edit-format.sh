@@ -14,7 +14,14 @@ FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.notebook_path
 
 # Run pre-commit hooks on the file
 # - Unified configuration in .pre-commit-config.yaml
-# - stderr visible for debugging, but hook failure doesn't block Claude
-uv run pre-commit run --files "$FILE" 2>&1 || true
+# - Security hooks (gitleaks) block on failure
+# - Formatter hooks (ruff, prettier) are non-blocking (they auto-fix)
+OUTPUT=$(uv run pre-commit run --files "$FILE" 2>&1) || {
+  if echo "$OUTPUT" | grep -qi "gitleaks.*failed"; then
+    jq -n --arg reason "gitleaks detected a potential secret in $FILE. Review and remove the secret before proceeding." \
+      '{decision: "block", reason: $reason}'
+    exit 0
+  fi
+}
 
 exit 0

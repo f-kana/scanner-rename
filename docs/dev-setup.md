@@ -6,6 +6,8 @@
 - Podman（`brew install podman`）
 - VS Code + Dev Containers 拡張機能
 
+エディタは VS Code のみをサポートする。フォーマッター（Ruff, Prettier）やリンター（Pyright）は VS Code 拡張と pre-commit の両方で動作するよう構成されており、`.editorconfig` は設けていない。
+
 ## Podman machine の設定
 
 DevContainer features のビルドには rootful モードが必要（rootless では `RUN --mount=type=bind` のパーミッションエラーが発生する）。

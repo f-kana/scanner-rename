@@ -30,7 +30,7 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-011** cc-sddの導入、最低限の初期設定。cc-sddの流儀に併せたSKILLファイル等の再配置が必要なら。
 - [x] **PBI-ph0-011-1** cc-sdd仕様リファレンスの整備（docs/cc-sdd/配下に reference.md, faq.md を配置、CLAUDE.mdから参照）
 - [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
-- [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
+- [x] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
 - [x] **PBI-ph0-013** skill-context-injectorの微修正。
 - [x] **PBI-ph0-014** DevContaienrへのghコマンドの導入。
 - [ ] **PBI-ph0-015** cc-sdd成果物（MD）のHTML閲覧環境の整備。MDファイルの可読性が低いため、HTML等で閲覧できる仕組みを導入する。複数方式（pandoc、grip、VS Code Preview等）を比較検討する。
