@@ -31,3 +31,13 @@ repos:
     hooks:
       - id: pyright
         stages: [manual]
+
+  # commitlint: Conventional Commits format enforcement (commit-msg stage)
+  - repo: local
+    hooks:
+      - id: commitlint
+        name: commitlint
+        language: system
+        entry: npx --no -- commitlint --edit
+        stages: [commit-msg]
+        pass_filenames: false
