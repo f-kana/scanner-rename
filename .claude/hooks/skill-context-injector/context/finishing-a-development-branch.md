@@ -12,3 +12,16 @@
 PBI番号がある場合、コミットメッセージのスコープに含める。
 
 例: `chore(PBI-ph0-010): introduce commitlint for conventional commits`
+
+## テストランナー
+
+このプロジェクトは uv で管理している。テスト実行は `uv run pytest` を使う（`pytest` 直接実行は不可）。
+
+## Push前のorigin/main取り込み
+
+Push前に origin/main の変更を取り込む。
+
+1. `git fetch origin main`
+2. `git merge origin/main`（コンフリクトがあれば解消）
+3. テストを再実行
+4. Push
