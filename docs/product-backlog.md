@@ -6,7 +6,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 
 ## Phase 0: プロジェクト骨格
 
-Python プロジェクトのセットアップ。
+### 基礎 （Python、VS Code等）
 
 - [x] **PBI-ph0-001** `pyproject.toml`、uv、pytest、ruff 等
 - [x] **PBI-ph0-001-1** カバレッジ計測機能の追加
@@ -21,19 +21,34 @@ Python プロジェクトのセットアップ。
 - [x] **PBI-ph0-004** Claude Code Hooksの設定
 - [x] **PBI-ph0-005** PBIに着手したらGitでFeatureブランチを切る+worktreeするところから開始するよう開発WorkflowをUpdateする
 - [x] **PBI-ph0-006** Ruff Formatterの改善（VS Code Extensionが効いてない？）
+
+### 応用的開発補助ツール
+
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
 - [x] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
+- [ ] **PBI-ph0-007-4** Terminalマルチプレクサの導入：herdr
+
+### 追加Harness
+
 - [ ] **PBI-ph0-008** 長いLLM処理が終わった or 人間への承認依頼で長い処理が中断した場合に、効果音が出るようにしたい。なぜなら、タスクの終わり/中断に僕が気づけるからだ。
 - [x] **PBI-ph0-009** Secret scanning の導入（pre-commit に gitleaks を追加）。認証情報隔離は整備済だが、git commit レベルでの自動検出がない。
-- [x] **PBI-ph0-010** Conventional Commits の導入（commitlint + commit-msg hook）。コミットメッセージの統一フォーマット化。
+- [~] **PBI-ph0-010** Conventional Commits の導入（commitlint + commit-msg hook）。コミットメッセージの統一フォーマット化。
+- [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
+
+### CC-SDD
+
 - [x] **PBI-ph0-011** cc-sddの導入、最低限の初期設定。cc-sddの流儀に併せたSKILLファイル等の再配置が必要なら。
 - [x] **PBI-ph0-011-1** cc-sdd仕様リファレンスの整備（docs/cc-sdd/配下に reference.md, faq.md を配置、CLAUDE.mdから参照）
-- [x] **PBI-ph0-011-2** statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
-- [x] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
+- [ ] **PBI-ph0-012** Harness初期版の総合レビュー。（CIは後回しにするのでそれ以外の)不足のレビュー
+
+### Harness改善・追加
+
 - [x] **PBI-ph0-013** skill-context-injectorの微修正。
 - [x] **PBI-ph0-014** DevContaienrへのghコマンドの導入。
-- [ ] **PBI-ph0-015** cc-sdd成果物（MD）のHTML閲覧環境の整備。MDファイルの可読性が低いため、HTML等で閲覧できる仕組みを導入する。複数方式（pandoc、grip、VS Code Preview等）を比較検討する。
+- [ ] **PBI-ph0-015** AI Agent活動補助としてAST解析(かLS？P)の何かを入れる。ほんとうに必要かはしらんが、試しに使ってみる。
+- [ ] **PBI-ph0-016** 通常の開発Workflowとは異なるWorkflowを導入する（想定はhousekeeping。.claude/settings[.local].jsonやmemoryの整頓などをやる最上位のWorkflow。
+- [ ] **PBI-ph0-016-1** Git branchのお掃除をやるSKILLまたはSubAgentの追加
 
 ## Phase 1: cc-sdd 実行
 
@@ -99,3 +114,11 @@ cc-sddの上位のdevelopment-workflowの作成。
 5. Git: mainへのマージ
 6. pbi: tracking-pbiでPBIクローズ
 7. retrospecting-\* スキルで振り返りと改善
+
+## PBI-ph0-017
+
+個別のプロセス想定は以下などだが、個別のSKILL/SubAgent実装とし、それらは別PBIでやる。
+
+- settings.json整頓、Memory整頓
+- Git Fetch -p
+- PRマージ済みGit Branch/Worktree削除
