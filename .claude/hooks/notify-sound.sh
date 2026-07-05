@@ -1,29 +1,32 @@
 #!/bin/bash
-# Stop / Notification hook: Play terminal bell to signal task state changes
+# Stop / Notification フック: タスク状態変化をターミナルベルで通知する
 #
-# Subcommands (called by hooks in settings.json):
-#   notify-sound.sh start   — record session start time (UserPromptSubmit hook)
-#   notify-sound.sh stop    — ring bell only if elapsed >= threshold (Stop hook)
-#   notify-sound.sh notify  — triple bell immediately (Notification/permission_prompt hook)
+# サブコマンド (settings.json のフックから呼び出す):
+#   notify-sound.sh start   — セッション開始時刻を記録 (UserPromptSubmit フック)
+#   notify-sound.sh stop    — 経過時間がしきい値以上の場合のみベル (Stop フック)
+#   notify-sound.sh notify  — 即時トリプルベル (Notification/permission_prompt フック)
 #
-# Configuration (optional files in $HOME):
-#   ~/.claude_bell_tty  — registered terminal path; run `make setup-bell` once per session
+# 設定 ($HOME に置くオプションファイル):
+#   ~/.claude_bell_tty  — 登録済みターミナルパス; セッションごとに `make setup-bell` を実行
 #
-# Terminal detection strategy (in priority order):
-#   1. ~/.claude_bell_tty  — user-registered terminal (required with terminal multiplexers)
-#   2. Process tree walk   — finds first pts in ancestry (works in simple environments)
-#   3. stderr fallback     — last resort
+# ターミナル検出の優先順位:
+#   1. ~/.claude_bell_tty  — ユーザー登録済みターミナル (ターミナルマルチプレクサ必須)
+#   2. プロセスツリー探索  — 祖先プロセスの最初の pts を探す (シンプルな環境で有効)
+#   3. stderr フォールバック — 最終手段
 
 set -euo pipefail
 
+# ---- 設定値 ----
+# Stop でベルを鳴らす最小経過秒数
+THRESHOLD_SEC=60
+# ----------------
+
 TYPE=${1:-stop}
-STATE_DIR="$HOME/.claude-notify"
+REPO_ROOT="$(git -C "$(dirname "${BASH_SOURCE[0]}")" rev-parse --show-toplevel)"
+STATE_DIR="$REPO_ROOT/tmp/claude-notify"
 
-# Read session_id from hook JSON (all hook types receive JSON on stdin)
+# フック JSON から session_id を読み取る (全フック種別で stdin に JSON が来る)
 SESSION_ID=$(jq -r '.session_id // empty' 2>/dev/null || true)
-
-# Minimum elapsed seconds before Stop rings (edit this script to change)
-THRESHOLD=5
 
 find_terminal() {
     local cfg="$HOME/.claude_bell_tty"
@@ -36,9 +39,9 @@ find_terminal() {
         fi
     fi
 
-    # Note: with terminal multiplexers (herdr/tmux/zellij), this finds the inner pts
-    # managed by the multiplexer — not the outer VS Code terminal. In that case,
-    # register the correct terminal with: make setup-bell
+    # 注意: ターミナルマルチプレクサ (wezterm/tmux/zellij) 環境では、
+    # マルチプレクサが管理する内側の pts が見つかり、VS Code 外側ターミナルとは異なる。
+    # その場合は make setup-bell で正しいターミナルを登録すること。
     local pid=$$
     for _ in $(seq 1 20); do
         local fd0
@@ -77,10 +80,10 @@ case "$TYPE" in
         start_time=$(cat "$start_file")
         elapsed=$(( $(date +%s) - start_time ))
         rm -f "$start_file"
-        [[ "$elapsed" -ge "$THRESHOLD" ]] && bell
+        [[ "$elapsed" -ge "$THRESHOLD_SEC" ]] && bell
         ;;
     notify)
-        # Permission prompts always notify regardless of elapsed time
+        # パーミッションプロンプトは経過時間に関わらず常に通知する
         bell; sleep 0.3; bell; sleep 0.3; bell
         ;;
 esac
