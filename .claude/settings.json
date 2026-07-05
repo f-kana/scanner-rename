@@ -64,15 +64,6 @@
       "Bash(cat > **/.kiro/specs/*/spec.json)"
     ],
     "additionalDirectories": [".claude/worktrees"],
-    "ask": [
-      "Edit(**/settings.json)",
-      "Edit(**/settings.local.json)",
-      "Write(**/settings.json)",
-      "Write(**/settings.local.json)",
-      "Bash(git push *)",
-      "Bash(* install *)",
-      "Bash(* uninstall *)"
-    ],
     "deny": [
       "Read(~/.config/gcloud/**)",
       "Read(~/.aws/**)",
