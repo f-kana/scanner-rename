@@ -14,12 +14,14 @@ Step 0 の代わりに、直接 EnterWorktree を呼び出す。既に worktree 
 ## EnterWorktree の制約回避
 
 EnterWorktree は以下の変換を強制する（Claude Code の既知の制約）:
+
 - `/` → `+` に置換（例: `feat/ph0-014` → `feat+ph0-014`）
 - `worktree-` プレフィックスを追加（例: `feat+ph0-014-...` → `worktree-feat+ph0-014-...`）
 
 参照: GitHub Issues [#28761](https://github.com/anthropics/claude-code/issues/28761), [#31969](https://github.com/anthropics/claude-code/issues/31969), [#62309](https://github.com/anthropics/claude-code/issues/62309)
 
 **回避手順:**
+
 1. EnterWorktree で worktree を作成（どんな名前でも可）
 2. worktree 内で正しいブランチ名を作成:
    ```bash
@@ -27,10 +29,11 @@ EnterWorktree は以下の変換を強制する（Claude Code の既知の制約
    ```
 3. 以降の作業は新しいブランチで行う
 4. **作業完了時**: EnterWorktree が作った `worktree-*` ブランチを削除:
+
    ```bash
    git branch -d worktree-<name>
    ```
-   
+
    ただし、以下の場合は削除しなくてよい:
    - worktree がまだ存在する場合（削除できない）
    - ブランチにコミットがない場合（害がない）
@@ -63,15 +66,13 @@ DEFAULT_BRANCH=${DEFAULT_BRANCH:-main}
 BEHIND=$(git rev-list --count HEAD..origin/$DEFAULT_BRANCH 2>/dev/null || echo 0)
 ```
 
-`BEHIND > 0` の場合、worktree 作成前にユーザーへ確認する:
+`BEHIND > 0` の場合、ユーザー確認なしで自動的に取り込む:
 
-> "origin/$DEFAULT_BRANCH が N コミット先行しています。取り込んでから worktree を作成しますか？"
-
-- Yes → `git merge origin/$DEFAULT_BRANCH`（main 上なら merge、feature ブランチなら rebase）を実行してから続行
-- No → その旨を記録して続行
+- `git merge origin/$DEFAULT_BRANCH` を実行
 - `git fetch` 失敗（ネットワーク不可など）→ サイレントスキップして続行
+- `git merge` 失敗（競合など）→ エラーを報告してユーザーへ確認
 
-PR マージによりローカルの main が遅れていることが多く、古いベースからブランチが切られる問題を防ぐ。
+PR マージによりローカルの main が遅れていることが多く、古いベースからブランチが切られる問題を防ぐ。確認プロンプトは不要。
 
 ## 言語指定
 
