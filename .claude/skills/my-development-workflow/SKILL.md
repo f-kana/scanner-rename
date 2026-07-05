@@ -37,7 +37,7 @@ cc-sdd / 完了後処理を一貫したシーケンスで実行する。
   tracking-pbi → 実装 → 完了マークの順で進めます。」
 ```
 
-または（CLAUDE.local.md に PREFERRED_BRANCH_STYLE=worktree が設定されている場合）:
+または（CLAUDE.local.md の PREFERRED_GIT_ISOLATION に応じて）:
 
 ```
 「軽量フロー + Worktree で進めます（軽量だが並行作業との競合を避けるため）。
@@ -72,11 +72,14 @@ cc-sdd / 完了後処理を一貫したシーケンスで実行する。
 
 ### Worktree 使用判定（軽量フローのみ）
 
-軽量フローを選んだ場合、さらに以下を確認してブランチ戦略を決定する:
+軽量フローを選んだ場合、`CLAUDE.local.md` の `PREFERRED_GIT_ISOLATION` を読み、作業方式を決定する:
 
-1. `CLAUDE.local.md` を読み、`PREFERRED_BRANCH_STYLE=worktree` が設定されているか確認する
-2. 設定あり → **軽量フロー + Worktree**（`using-git-worktrees` で worktree を作成）
-3. 設定なし → **軽量フロー（通常）**（main 直接 or 短命 feature ブランチ）
+| 設定値 | 軽量フローの動作 |
+|---|---|
+| `worktree` | 軽量フロー + Worktree（`using-git-worktrees` で worktree を作成） |
+| `branch` | feature ブランチを切って作業 |
+| `main` | main ブランチで直接作業 |
+| 未設定 | `branch` と同じ（デフォルト） |
 
 フルフローは常に worktree を使用する（この判定は不要）。
 
@@ -84,12 +87,16 @@ cc-sdd / 完了後処理を一貫したシーケンスで実行する。
 
 ## Step 3: 実行する
 
-### 軽量フロー（通常）
+### 軽量フロー（main 直接）
 
 1. `tracking-pbi` で PBI を進行中 [~] にマーク
-2. 実装:
-   - main ブランチで直接作業（数分で終わる変更）
-   - または短命な feature ブランチを切って作業・マージ
+2. main ブランチで直接実装・コミット
+3. `tracking-pbi` で PBI を完了 [x] にマーク
+
+### 軽量フロー（branch）
+
+1. `tracking-pbi` で PBI を進行中 [~] にマーク
+2. feature ブランチを切って実装・マージ
 3. `tracking-pbi` で PBI を完了 [x] にマーク
 
 ### 軽量フロー + Worktree
