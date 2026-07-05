@@ -51,7 +51,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] **PBI-ph0-016-1** Git branchのお掃除をやるSKILLまたはSubAgentの追加
 - [x] **PBI-ph0-018** curating-harness SKILLの新規作成とclassifying-harnessとの連携追加。ハーネス構成要素の外部調達・自作判断プロセスを定義。
 - [x] **PBI-ph0-019** VS Code Built-in ブラウザ向け Host OS パス解決 Harness。HTML の目視確認時に DevContainer パスではなく Host OS パスを提示できるようにする。
-- [ ] **PBI-ph0-020** セキュリティ隔離モデルのドキュメント修正。security-notes.md / initial-context.md の「認証情報はホストのみ」記述を実態（named volume で ADC がコンテナ内に存在）に合わせて書き直す。ph1-001 のブロッカー。
+- [x] **PBI-ph0-020** セキュリティ隔離モデルのドキュメント修正。security-notes.md / initial-context.md の「認証情報はホストのみ」記述を実態（named volume で ADC がコンテナ内に存在）に合わせて書き直す。ph1-001 のブロッカー。
 - [x] **PBI-ph0-021** ph0-012 レビュー指摘の軽微即修正バッチ（CLAUDE.md ワークフロー節の更新、--no-verify の deny 追加、パス誤記修正ほか）。
 - [ ] **PBI-ph0-022** PreToolUse(Skill) フックの additionalContext 注入が実際に機能しているかの動作検証。
 
