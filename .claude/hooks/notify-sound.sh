@@ -13,14 +13,14 @@ set -euo pipefail
 TYPE=${1:-stop}
 cat > /dev/null  # consume stdin (hook protocol requires reading it)
 
+# /dev/tty: controlling terminal (available when Claude Code runs in a terminal)
+# stderr: fallback in case /dev/tty is unavailable
+bell() { printf '\a' > /dev/tty 2>/dev/null || printf '\a' >&2; }
+
 if [[ "$TYPE" == "notify" ]]; then
-    printf '\a'
-    sleep 0.3
-    printf '\a'
-    sleep 0.3
-    printf '\a'
+    bell; sleep 0.3; bell; sleep 0.3; bell
 else
-    printf '\a'
+    bell
 fi
 
 exit 0
