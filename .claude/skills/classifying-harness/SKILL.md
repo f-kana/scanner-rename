@@ -77,7 +77,7 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 分類に進む前に、プロジェクトに既存のカスタマイズ機構がないか確認する。
 
 確認対象：
-- `.claude/hooks/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injectors/`）
+- `.claude/hooks/skill-context-injector/skill-context-injector.sh` とその対象ディレクトリ（`.claude/hooks/skill-context-injector/context/`）
   - APM で導入した外部スキルの挙動を SKILL.md を変更せずにカスタマイズできる
 - `.claude/settings.json` の hooks 設定
 - 既存の path-scoped rules（`.claude/rules/**`）

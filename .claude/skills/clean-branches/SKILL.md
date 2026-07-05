@@ -28,7 +28,7 @@ If fetch fails (no remotes configured), note remote data is unavailable and cont
 
 Run the candidate detection script, passing the optional pattern filter:
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/clean-branches/scripts/find-candidates.sh "$PATTERN"
+bash ${CLAUDE_PROJECT_DIR}/.claude/skills/clean-branches/scripts/find-candidates.sh "$PATTERN"
 ```
 The script outputs two labeled sections (`=== MERGED ===` and `=== STALE ===`), one branch per line. Branches carry two optional annotations:
 - `[worktree:/path/to/wt]` — branch is checked out in a worktree

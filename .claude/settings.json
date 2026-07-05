@@ -95,7 +95,9 @@
       "Bash(cat *credential*)",
       "Bash(cat *token*)",
       "Bash(cat **/.env*)",
-      "Bash(cat **/secrets/*)"
+      "Bash(cat **/secrets/*)",
+      "Bash(git commit *--no-verify*)",
+      "Bash(git commit *-n *)"
     ]
   },
   "hooks": {

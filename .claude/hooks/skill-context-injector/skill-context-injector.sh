@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # スキル固有コンテキストの注入ディスパッチャ。
 # 外部から導入したSKILLで、SKILL.mdに手を加えずとも該当SKILLの挙動を微修正するために作った。
 # context/<skill名>.md にプロンプト文を置くだけで、additionalContextとして注入される。

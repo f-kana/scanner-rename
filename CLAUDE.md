@@ -8,17 +8,11 @@
 
 ### 開発ワークフロー全体
 
-機能開発開始時の手順:
+機能開発は必ず `my-development-workflow` スキル経由で行う。
 
-1. ユーザーから開発対象のPBIの指示をもらい、`tracking-pbi` で PBI を進行中に更新
-2. `using-git-worktrees` で worktree を作成（命名規則は context injector が注入）
-3. cc-sdd のフロー（仕様策定 → 実装）に入る
-
-機能開発完了時の手順:
-
-1. `finishing-a-development-branch` で PR 作成またはマージ
-2. `tracking-pbi` で PBI を完了に更新
-3. `retrospecting-harness`でHarnessに関する振り返りと改善
+- PBI への着手（「do PBI-xxx」「PBI-xxx をやる」等）: `my-development-workflow` を呼び出す
+- スキルがフロー選択（軽量 or フル SDD）・宣言・ユーザー承認・実装・完了マーク・振り返りを一貫して進める
+- `tracking-pbi`、`using-git-worktrees`、`finishing-a-development-branch`、`retrospecting-harness` は個別に呼ばず、スキルを経由すること
 
 ## Agentic SDLC and Spec-Driven Development (cc-sdd)
 

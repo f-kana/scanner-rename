@@ -57,7 +57,7 @@ EnterWorktree で worktree を作成した後、**手動で正しいブランチ
 
 この手順は以下に文書化されている：
 
-- `.claude/hooks/skill-context-injectors/using-git-worktrees.md`: `using-git-worktrees` スキルへのコンテキスト注入
+- `.claude/hooks/skill-context-injector/context/using-git-worktrees.md`: `using-git-worktrees` スキルへのコンテキスト注入
 - `CLAUDE.md`: 開発ワークフロー全体の中で参照
 
 ## Consequences
