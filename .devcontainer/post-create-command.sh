@@ -12,6 +12,10 @@ sudo chown -R vscode:nvm /usr/local/share/nvm/versions/node/$(node --version)/li
 # tmux 設定ファイルのコピー
 cp .devcontainer/.tmux.conf /home/vscode/.tmux.conf
 
+# herdr 設定ファイルのコピー
+mkdir -p /home/vscode/.config/herdr
+cp .devcontainer/herdr-config.toml /home/vscode/.config/herdr/config.toml
+
 # Python 依存関係のインストール
 uv sync
 
