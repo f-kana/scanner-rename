@@ -1,3 +1,7 @@
+## Step 2 の環境検出コマンド
+
+SKILL.md の Step 2 では `GIT_DIR=$(...)` のような変数代入付きコマンドが記載されているが、この形式は permission パターンにマッチしない。`git rev-parse --git-dir` と `git rev-parse --git-common-dir` を個別の Bash ツール呼び出しで実行すること。
+
 ## デフォルト動作
 
 テストが通った場合、Push して Pull Request を作成する。
