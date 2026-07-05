@@ -27,7 +27,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
 - [x] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
-- [ ] **PBI-ph0-007-4** Terminalマルチプレクサの導入：herdr
+- [~] **PBI-ph0-007-4** Terminalマルチプレクサの導入：herdr
 
 ### 追加Harness
 
@@ -50,6 +50,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [ ] **PBI-ph0-016** 通常の開発Workflowとは異なるWorkflowを導入する（想定はhousekeeping。.claude/settings[.local].jsonやmemoryの整頓などをやる最上位のWorkflow。
 - [x] **PBI-ph0-016-1** Git branchのお掃除をやるSKILLまたはSubAgentの追加
 - [x] **PBI-ph0-018** curating-harness SKILLの新規作成とclassifying-harnessとの連携追加。ハーネス構成要素の外部調達・自作判断プロセスを定義。
+- [x] **PBI-ph0-019** VS Code Built-in ブラウザ向け Host OS パス解決 Harness。HTML の目視確認時に DevContainer パスではなく Host OS パスを提示できるようにする。
 
 ## Phase 1: cc-sdd 実行
 
@@ -115,6 +116,22 @@ cc-sddの上位のdevelopment-workflowの作成。
 5. Git: mainへのマージ
 6. pbi: tracking-pbiでPBIクローズ
 7. retrospecting-\* スキルで振り返りと改善
+
+## PBI-ph0-019
+
+### 背景
+
+`skill-creator` の Eval など、HTML を生成して VS Code Built-in ブラウザで目視確認したい場面がある。Built-in ブラウザは Host OS 側のパスで動作するが、Claude Code はデフォルトで DevContainer 側のパス（`/workspaces/...`）しか知らないため、そのパスを提示してもブラウザがファイルを開けない。
+
+DevContainer 内では `/proc/1/mountinfo` を読むことで Host OS 側のマウントパスを取得できる（Mac + Podman 環境で確認済み）。
+
+### 要件
+
+- DevContainer パスを Host OS パスに変換して提示する Harness（SKILL または Hook）を整備する
+- `/proc/1/mountinfo` からワークスペースのマウント情報を取得してパス変換する
+- 他の SKILL に依存しない自己完結した実装とする
+- Windows + WSL + Docker 環境でも動作する設計とする（ただし動作未検証）
+  - WSL 環境では `/proc/1/mountinfo` のマウント表記が異なる可能性があるため、フォールバック処理を検討すること
 
 ## PBI-ph0-017
 
