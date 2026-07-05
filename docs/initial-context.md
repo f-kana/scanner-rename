@@ -302,7 +302,7 @@ Claude Code は DevContainer の中で実行します。
 
 GCP Test Broker は Mac ホスト上で、DevContainer の外で実行します。
 
-GCP 認証情報はホスト上のみに存在し、DevContainer にはマウントしません。
+GCP 認証情報（ADC）は named volume 経由でコンテナ内に存在します。Claude Code による読み取りは settings.json の deny リストと規範ルールで抑止しますが、これはベストエフォートの措置であり完全な技術的強制ではありません。コンテナ内への ADC 存在は受容済みリスクとして管理します。詳細は `docs/security-notes.md` を参照してください。
 
 ## クラウド統合テスト
 
