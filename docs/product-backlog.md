@@ -27,7 +27,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] **PBI-ph0-007-1** Terminalマルチプレクサの導入：tmux
 - [x] **PBI-ph0-007-2** Terminalマルチプレクサの導入：byobu
 - [x] **PBI-ph0-007-3** Terminalマルチプレクサの導入：zellij
-- [~] **PBI-ph0-007-4** Terminalマルチプレクサの導入：herdr
+- [x] **PBI-ph0-007-4** Terminalマルチプレクサの導入：herdr
 
 ### 追加Harness
 

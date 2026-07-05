@@ -17,3 +17,10 @@ RUN ARCH=$(uname -m) \
     && curl -fsSL "https://github.com/zellij-org/zellij/releases/download/v${ZELLIJ_VERSION}/zellij-${ARCH}-unknown-linux-musl.tar.gz" \
         | tar xz -C /usr/local/bin \
     && zellij --version
+
+RUN ARCH=$(uname -m) \
+    && HERDR_VERSION=$(curl -fsSL https://api.github.com/repos/ogulcancelik/herdr/releases/latest | grep '"tag_name"' | sed 's/.*"v\(.*\)".*/\1/') \
+    && curl -fsSL "https://github.com/ogulcancelik/herdr/releases/download/v${HERDR_VERSION}/herdr-linux-${ARCH}" \
+        -o /usr/local/bin/herdr \
+    && chmod +x /usr/local/bin/herdr \
+    && herdr --version
