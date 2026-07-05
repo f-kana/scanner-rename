@@ -15,6 +15,7 @@ dependencies:
     - anthropics/skills/skills/skill-creator
     - obra/superpowers/skills/finishing-a-development-branch#v6.0.3
     - obra/superpowers/skills/using-git-worktrees#v6.0.3
+    - gupsammy/Claudest/plugins/claude-coding/skills/clean-branches#1c634ac064bc24f1d3ecc3e2cfa5c0f29b3ce4a9
   mcp: []
 includes: auto
 scripts: {}

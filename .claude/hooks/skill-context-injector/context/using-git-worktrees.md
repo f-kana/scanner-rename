@@ -1,3 +1,9 @@
+## Step 0 の手動検出をスキップする
+
+このプロジェクトでは EnterWorktree ツールが利用可能。EnterWorktree は隔離状態の判定を内部で行うため、SKILL.md の Step 0（`GIT_DIR=$(...)` 等による手動 git 状態検出）は冗長であり、スキップすること。
+
+Step 0 の代わりに、直接 EnterWorktree を呼び出す。既に worktree 内にいる場合は EnterWorktree が検出して報告する。
+
 ## ブランチ命名規則
 
 - パターン: `feat/{PBI-ID}-{短い説明}`

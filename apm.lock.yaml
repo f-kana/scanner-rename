@@ -1,5 +1,5 @@
 lockfile_version: "1"
-generated_at: "2026-06-28T12:31:21.201903+00:00"
+generated_at: "2026-07-05T07:47:52.852868+00:00"
 apm_version: 0.21.0
 dependencies:
   - repo_url: anthropics/skills
@@ -48,6 +48,21 @@ dependencies:
       .claude/skills/skill-creator/scripts/run_loop.py: sha256:7bd6f674203168520517eec94c55f493c0d154339b061b4d7c0f0dad187d0f21
       .claude/skills/skill-creator/scripts/utils.py: sha256:3af8ae62c40c73ab712207436a0d9a981e845f25c5a7040229eb189cc8e45bb1
     content_hash: sha256:b2bfe91d69ca99994c0566baede889e7d2b9bb8791c6b6106c5d387392f717f6
+  - repo_url: gupsammy/Claudest
+    host: github.com
+    resolved_commit: 1c634ac064bc24f1d3ecc3e2cfa5c0f29b3ce4a9
+    resolved_ref: 1c634ac064bc24f1d3ecc3e2cfa5c0f29b3ce4a9
+    virtual_path: plugins/claude-coding/skills/clean-branches
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .claude/skills/clean-branches
+      - .claude/skills/clean-branches/SKILL.md
+      - .claude/skills/clean-branches/scripts/find-candidates.sh
+    deployed_file_hashes:
+      .claude/skills/clean-branches/SKILL.md: sha256:fd16e5b6c76cfc1c5d4c95789c03fba83029124acbda26d238b4422d33e8dd30
+      .claude/skills/clean-branches/scripts/find-candidates.sh: sha256:bf2409a9f0915a37f8ffad68abf2457c362dbc2f4aa2910d5edf212951bf54f8
+    content_hash: sha256:f98e7eb9e0b3390ecc1f48bee1b0327bfc07e608d70a1ae9454879e0db67809f
   - repo_url: mattpocock/skills
     host: github.com
     resolved_commit: 2454c95dc305c158b21a0cdafeb728879dd0359a

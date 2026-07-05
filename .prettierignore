@@ -7,6 +7,9 @@
 # Python は Ruff が担当
 *.py
 
+# APM 自動生成ファイル（フォーマット対象外）
+apm.lock.yaml
+
 # 依存・仮想環境
 .venv/
 apm_modules/
