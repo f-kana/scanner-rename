@@ -54,8 +54,5 @@
         "**/.ruff_cache": true,
         "**/*.egg-info": true
     },
-    "makefile.configureOnOpen": false,
-
-    // Terminal bell for Claude Code hook notifications
-    "terminal.integrated.bellStyle": "sound"
+    "makefile.configureOnOpen": false
 }

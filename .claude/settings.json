@@ -142,6 +142,16 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/notify-sound.sh start"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
