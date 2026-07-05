@@ -1,11 +1,18 @@
 # 個人設定（CLAUDE.local.md にコピーして使う）
 
-# 軽量フロー時の作業方式（フルフロー/SDD は常に worktree）
+## 設定値
 
-# worktree — git worktree で別ディレクトリ（並行作業向き）
+<!--
+軽量フロー時の作業方式（フルフロー/SDD は常に worktree）
 
-# branch — feature ブランチを切って作業（デフォルト）
+* worktree — git worktree で別ディレクトリ（並行作業向き）
+* branch — feature ブランチを切って作業（デフォルト）
+* main — main で直接作業
 
-# main — main で直接作業
+-->
 
-# PREFERRED_GIT_ISOLATION=branch
+PREFERRED_GIT_ISOLATION=branch
+
+## 個人で有効なInstructions
+
+xxx
