@@ -1,0 +1,80 @@
+{
+  "skill_name": "curating-harness",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "classifying-harnessでカテゴリ4（Skill新規）に分類済み。\nGitHub公式のMCP serverで、要求の90%を満たす候補が見つかった。\nStar 5000+、月次更新、MIT license、公式ドキュメントあり。\nこの候補の採用判断をしてほしい。",
+      "expected_output": "Fit: High、Trust: High、Risk: Low〜Medium と評価し、「そのまま採用」または「APM/Plugin経由で採用」を推奨する",
+      "files": [],
+      "assertions": [
+        {
+          "id": "3axis-evaluation",
+          "text": "Fit、Trust、Riskの3軸すべてで評価レベル（High/Medium/Low等）が明示的に出力されている",
+          "type": "contains_all",
+          "targets": ["Fit", "Trust", "Risk"]
+        },
+        {
+          "id": "adoption-decision",
+          "text": "採用判断が「そのまま採用」「fork/vendor」「参考にして自作」「完全自作」「不採用」「追加調査が必要」のいずれかで明示されている",
+          "type": "qualitative"
+        },
+        {
+          "id": "deployment-method",
+          "text": "導入方法（Plugin Marketplace、APM、fork/vendor等）が提案されている",
+          "type": "qualitative"
+        },
+        {
+          "id": "supply-chain-risk",
+          "text": "supply-chain riskまたはセキュリティリスクへの言及がある",
+          "type": "qualitative"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "classifying-harnessでカテゴリ4（Skill新規）に分類済み。\n「日本語の社内レビュープロセスに合わせたコードレビューSkill」が欲しい。\n社内の承認フロー、日本語でのレビューコメント規約、部署固有のチェック項目がある。\n既存の公開レビューSkillを調査してほしい。",
+      "expected_output": "候補検索を実施し、Fit Low〜Mediumと評価、「参考にして自作」または「完全自作」を推奨、自作骨子を提示する",
+      "files": [],
+      "assertions": [
+        {
+          "id": "search-scope-explicit",
+          "text": "探索範囲（探索元）が明示されている",
+          "type": "qualitative"
+        },
+        {
+          "id": "fit-pj-specificity",
+          "text": "Fitの評価理由にPJ固有性（社内ルール、日本語、部署固有等）への言及がある",
+          "type": "qualitative"
+        },
+        {
+          "id": "self-build-reasoning",
+          "text": "自作推奨の理由が説明されている",
+          "type": "qualitative"
+        },
+        {
+          "id": "self-build-skeleton",
+          "text": "自作の骨子（name、主な責務、対象外のうち少なくとも2つ）が出力されている",
+          "type": "qualitative"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "「完了通知の仕組みが欲しいんだけど、良いのないか探して」\nclassifying-harnessの分類はまだ行っていない。",
+      "expected_output": "分類未了を指摘し、候補検索に独断で進まず、分類の実施を促すか仮説を提示して確認する",
+      "files": [],
+      "assertions": [
+        {
+          "id": "classification-missing",
+          "text": "classifying-harnessの分類が未了であることへの言及がある",
+          "type": "qualitative"
+        },
+        {
+          "id": "classification-before-recommendation",
+          "text": "候補の最終推奨の前に分類の確認または分類仮説の提示がある",
+          "type": "qualitative"
+        }
+      ]
+    }
+  ]
+}
