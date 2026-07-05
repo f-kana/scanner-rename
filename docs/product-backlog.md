@@ -49,6 +49,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [ ] **PBI-ph0-015** AI Agent活動補助としてAST解析(かLS？P)の何かを入れる。ほんとうに必要かはしらんが、試しに使ってみる。
 - [ ] **PBI-ph0-016** 通常の開発Workflowとは異なるWorkflowを導入する（想定はhousekeeping。.claude/settings[.local].jsonやmemoryの整頓などをやる最上位のWorkflow。
 - [ ] **PBI-ph0-016-1** Git branchのお掃除をやるSKILLまたはSubAgentの追加
+- [x] **PBI-ph0-018** curating-harness SKILLの新規作成とclassifying-harnessとの連携追加。ハーネス構成要素の外部調達・自作判断プロセスを定義。
 
 ## Phase 1: cc-sdd 実行
 

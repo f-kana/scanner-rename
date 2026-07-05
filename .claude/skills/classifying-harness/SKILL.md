@@ -6,6 +6,7 @@ description: >-
   このスキルを使うべき場面: CLAUDE.mdの編集・リファクタ・肥大化防止、Claude Codeやエージェントの挙動改善、
   ハーネスワークフローの修正、「これはSkill/Hook/SubAgent/ruleのどれにすべきか」の判断、
   Claude Codeの設定や指示の整理。CLAUDE.mdへの変更提案を見かけたら、まずこのスキルで分類せよ。
+  分類結果が外部調達・自作判断を要する場合はcurating-harnessに委譲する。
 ---
 
 # Classifying Harness
@@ -120,7 +121,27 @@ CLAUDE.mdはappend-onlyの反省ログではない。
 分類結果と推奨する修正先を提示する。ファイル変更案を含める。
 判断に迷う場合は、最小のドラフトを提示してユーザー承認を求める。
 
-### Step 7: CLAUDE.md変更時のレビュー（カテゴリ8の場合のみ）
+### Step 7: curating-harnessへの委譲判断
+
+分類結果が外部調達・自作判断に向く場合、`curating-harness` に委譲する。
+
+委譲対象: Skill / SubAgent / Hook / slash command / Plugin / MCP / CI template 等の新規作成・導入。
+委譲しない: CLAUDE.md、path-scoped rule、append-system-prompt、一回限りの指示。
+
+| # | カテゴリ | curating-harness |
+|---|---------|-----------------|
+| 1 | 永続的な変更は不要 | 不要 |
+| 2 | Prompt / slash command | 条件付きで起動 |
+| 3 | Hook / permission / CI | 条件付きで起動 |
+| 4 | Skill更新 / 新規Skill | 起動推奨 |
+| 5 | Skill-context-injector | 条件付きで起動 |
+| 6 | SubAgent更新 / 新規SubAgent | 起動推奨 |
+| 7 | Path-scoped rule | 原則不要 |
+| 8 | Output Styles | 条件付きで起動 |
+| 9 | append-system-prompt | 原則不要 |
+| 10 | CLAUDE.md update | 不要 |
+
+### Step 8: CLAUDE.md変更時のレビュー（カテゴリ10の場合のみ）
 
 CLAUDE.mdを編集する場合、以下のレビューを必ず出力する。
 
@@ -142,7 +163,7 @@ CLAUDE.mdを編集する場合、以下のレビューを必ず出力する。
 
 CLAUDE.mdのトークン予算は200行以下が推奨。追加する前に、現在の行数を確認し、削除・統合できる既存指示がないか検討する。
 
-### Step 8: 承認後に最小差分で適用
+### Step 9: 承認後に最小差分で適用
 
 ユーザーが承認した変更だけを適用する。
 CLAUDE.mdの変更は可能な限り最小差分にする。
@@ -237,6 +258,13 @@ CLAUDE.mdに以下のような表現を書かない。
 1. `retrospecting-harness`で問題を分析し、改修提案を作る
 2. `classifying-harness`の分類ワークフローに従い、各提案の修正先を決定する
 3. ユーザー承認後に最小差分で適用する
+
+## curating-harnessとの関係
+
+`classifying-harness`は「どのレイヤーで解くべきか」を分類する。
+`curating-harness`は、分類結果がSkill / SubAgent / Hook等になった場合に、「既存公開物を使うか、fork/vendorするか、参考にして自作するか」を判断する。
+
+`classifying-harness`は外部SKILL検索や採用判断を自分で抱え込まない。分類後、外部調達・自作判断が必要な場合だけ`curating-harness`に渡す。
 
 ## 参考資料
 
