@@ -47,7 +47,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] **PBI-ph0-013** skill-context-injectorの微修正。
 - [x] **PBI-ph0-014** DevContaienrへのghコマンドの導入。
 - [x] **PBI-ph0-015** AI Agent活動補助としてAST解析(かLS？P)の何かを入れる。ほんとうに必要かはしらんが、試しに使ってみる。-> 既にpyrightが使えたのでこのPBIは保留。
-- [~] **PBI-ph0-016** 通常の開発Workflowとは異なるWorkflowを導入する（想定はhousekeeping。.claude/settings[.local].jsonやmemoryの整頓などをやる最上位のWorkflow。
+- [x] **PBI-ph0-016** 通常の開発Workflowとは異なるWorkflowを導入する（想定はhousekeeping。.claude/settings[.local].jsonやmemoryの整頓などをやる最上位のWorkflow。
 - [x] **PBI-ph0-016-1** Git branchのお掃除をやるSKILLまたはSubAgentの追加
 - [x] **PBI-ph0-018** curating-harness SKILLの新規作成とclassifying-harnessとの連携追加。ハーネス構成要素の外部調達・自作判断プロセスを定義。
 - [x] **PBI-ph0-019** VS Code Built-in ブラウザ向け Host OS パス解決 Harness。HTML の目視確認時に DevContainer パスではなく Host OS パスを提示できるようにする。
