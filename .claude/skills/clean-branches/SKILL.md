@@ -4,8 +4,6 @@ description: >
   This skill should be used when the user says "clean up branches", "delete merged
   branches", or "prune stale branches". Use whenever the user mentions branch cleanup,
   pruning, or stale branch deletion — even if they don't say "clean-branches" explicitly.
-  Also use when the user says "ブランチを掃除", "マージ済みブランチを削除", "古いブランチを削除",
-  "ブランチの整理", "不要なブランチを消す", or any similar Japanese phrasing for branch cleanup.
 argument-hint: "[branch-pattern]"
 allowed-tools:
   - Bash
