@@ -16,6 +16,9 @@ cp .devcontainer/.tmux.conf /home/vscode/.tmux.conf
 mkdir -p /home/vscode/.config/herdr
 cp .devcontainer/herdr-config.toml /home/vscode/.config/herdr/config.toml
 
+# シェルエイリアスのコピー
+cp .devcontainer/.bash_aliases /home/vscode/.bash_aliases
+
 # Python 依存関係のインストール
 uv sync
 
