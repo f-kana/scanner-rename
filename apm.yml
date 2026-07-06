@@ -2,10 +2,6 @@ name: scanner-rename-initial-docs
 version: 1.0.0
 description: APM project for scanner-rename-initial-docs
 author: F. Kanayama
-# Which agent platforms to deploy to.
-# Resolution order: --target flag > this field > auto-detect from filesystem.
-# Accepted values: vscode, agents, copilot, claude, cursor, opencode, codex,
-# gemini, antigravity, windsurf, kiro, agent-skills, all
 targets:
   - claude
 dependencies:
@@ -16,6 +12,7 @@ dependencies:
     - obra/superpowers/skills/finishing-a-development-branch#v6.0.3
     - obra/superpowers/skills/using-git-worktrees#v6.0.3
     - gupsammy/Claudest/plugins/claude-coding/skills/clean-branches#1c634ac064bc24f1d3ecc3e2cfa5c0f29b3ce4a9
+    - microsoft/apm/packages/apm-guide/.apm/skills/apm-usage#v0.24.0
   mcp: []
 includes: auto
 scripts: {}

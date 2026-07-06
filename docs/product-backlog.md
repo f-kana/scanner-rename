@@ -55,6 +55,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] PBI-ph0-021: ph0-012 レビュー指摘の軽微即修正バッチ（CLAUDE.md ワークフロー節の更新、--no-verify の deny 追加、パス誤記修正ほか）。
 - [x] PBI-ph0-022: Herdr SKILLの導入(APM) `https://github.com/ogulcancelik/herdr/blob/master/SKILL.md`
 - [x] PBI-ph0-023: `my-development-workflow` の軽量フローに Worktree オプションを追加。重量作業と並行して軽量作業を行う場合でも、ブランチ競合を避けるために Worktree を使えるようにする。
+- [x] PBI-ph0-024: apm-usage SKILLの追加
 
 ## Phase 1: cc-sdd 実行
 
