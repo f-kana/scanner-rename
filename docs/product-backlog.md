@@ -64,52 +64,23 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 
 ここから先は cc-sdd の成果物が作業の正となる。
 
-- [ ] PBI-ph1-001: cc-sdd の実行。入口は `/kiro-discovery`。Phase 2〜6 の分解とスペック分割（single / multi）の対応を Discovery で突き合わせる。
-- [ ] PBI-ph1-002: 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー
+- [x] PBI-ph1-001: cc-sdd の実行。入口は `/kiro-discovery`。Phase 2〜6 の分解とスペック分割（single / multi）の対応を Discovery で突き合わせる。（2026-07-08 完了: 4 スペック分割を `.kiro/steering/roadmap.md` に記録し、`/kiro-spec-batch` で全スペック生成・クロススペックレビュー済み）
+- [ ] PBI-ph1-002: 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー。Fable セッションで実施する。クロススペックレビューの minor 指摘 4 件（下記 PBI詳細）を観点に含める。
 
-## Phase 2〜6: プロダクト本開発
+## Phase 2〜6: プロダクト本開発（cc-sdd スペックに再定義済み）
 
-以下は cc-sdd 実行前の想定 PBI。PBI-ph1-001 の Discovery で再定義される予定。現時点のレビューで不足している観点:
+PBI-ph1-001 の Discovery / `/kiro-spec-batch`（2026-07-08）で、旧想定 PBI（ph2-001〜ph6-003）を以下の 4 スペックに再定義した。旧 PBI 一覧はスペックの tasks.md に吸収されたためここからは削除し、作業の正は `.kiro/specs/{feature}/tasks.md` と `/kiro-spec-status` とする。当時挙げていた不足観点（LLM プロンプト設計、Gemini 構造化出力スキーマ、エラーハンドリング・リトライ戦略、Broker 経由のローカル E2E）は各スペックのスコープに吸収済み。
 
-- LLM プロンプト設計・チューニングの工程（Gemini への抽出指示、命名ポリシーのプロンプト化）
-- Gemini 構造化出力のスキーマ設計（メタデータ抽出の入出力定義）
-- エラーハンドリング・リトライ戦略（Cloud Run Job の再試行、Drive API レート制限等）
-- ローカル開発での E2E 動作確認（Broker 経由でジョブ全体を1回通すPBI）
+進め方: 依存順に直列。スペックごとに 1 セッションで `/kiro-impl {feature}` を実行する。実装セッションは Vertex（Opus/Sonnet）、スペックレビュー・`/kiro-validate-impl`・例外時のデバッグ判断は Fable セッションで行う。各 PBI の完了条件は tasks.md 全完了 + `/kiro-validate-impl` 通過。
 
-### Phase 2: コアドメインロジック
+- [ ] PBI-ph2-101: `/kiro-impl core-naming-engine` — 純ドメイン層（旧 ph2-001〜005 を包含）
+- [ ] PBI-ph2-102: `/kiro-impl extraction-pipeline` — ポート/フェイク/スキーマ/プロンプト/アプリフロー（旧 ph3-001〜003 を包含）
+- [ ] PBI-ph2-103: `/kiro-impl gcp-test-broker` — ホスト側 Broker v0（旧 ph4-001〜002 を包含）
+- [ ] PBI-ph2-104: `/kiro-impl cloud-runtime-deploy` — 実アダプタ/クラウド統合テスト/デプロイ/監視（旧 ph5-001〜002、ph6-001〜003 を包含）
 
-外部サービス依存なしの純粋 Python ロジック。
+再定義前にクローズ済みの旧 PBI（歴史的記録として保持）:
 
-- [ ] PBI-ph2-001: スキャナーファイル名のパースとバリデーション
-- [ ] PBI-ph2-002: 日付処理と元号変換
-- [ ] PBI-ph2-003: 命名エンジン（抽出メタデータからファイル名を生成）
-- [ ] PBI-ph2-004: 重複サフィックスとサニタイズ
-- [ ] PBI-ph2-005: ユニットテスト
 - [x] PBI-ph2-006: cc-sddの上位に置くSKILL: development-workflowの作成。（Phase 0 で `my-development-workflow` として前倒し実装済み。ph0-012 レビューで確認しクローズ）
-
-### Phase 3: ポート／アダプタとフェイク統合テスト
-
-- [ ] PBI-ph3-001: Drive、OCR、LLM 抽出のインターフェース定義
-- [ ] PBI-ph3-002: フェイクアダプタの実装
-- [ ] PBI-ph3-003: `integration_fake` テストでアプリケーションフロー全体を検証
-
-### Phase 4: GCP Test Broker v0
-
-Mac ホスト側で動作するテストブローカーの最小実装。
-
-- [ ] PBI-ph4-001: OCR フィクスチャと抽出フィクスチャ用のエンドポイント
-- [ ] PBI-ph4-002: `broker/` に実装
-
-### Phase 5: 実アダプタとクラウド統合テスト
-
-- [ ] PBI-ph5-001: Google Drive API、Document AI、Gemini の実アダプタ
-- [ ] PBI-ph5-002: ブローカー経由のクラウド統合テスト
-
-### Phase 6: パッケージングとデプロイと監視
-
-- [ ] PBI-ph6-001: Cloud Run Job（Dockerfile、エントリポイント）
-- [ ] PBI-ph6-002: 構造化ログと Cloud Monitoring ログベースアラート
-- [ ] PBI-ph6-003: Cloud Scheduler による定期実行
 
 --
 
@@ -118,6 +89,15 @@ Mac ホスト側で動作するテストブローカーの最小実装。
 詳細を補足する必要のあるPBIについて、個別に記述する。
 SDDでSpec/Requirementを定義するまでの暫定的な情報置き場であり、
 Spec/Requirement作成時にここからは消す。
+
+## PBI-ph1-002
+
+`/kiro-spec-batch`（2026-07-08）のクロススペックレビューで挙がった minor 指摘（critical / important はゼロ）。レビュー時に以下を確認・反映する:
+
+1. extraction-pipeline ⇔ gcp-test-broker: `ExtractedText.value` の非空制約が型レベル不変条件（`__post_init__`）か否かを extraction-pipeline 側で明記し、不変条件なら Broker の `ExtractedTextPayload` にも `min_length=1` を追加する
+2. gcp-test-broker ⇔ cloud-runtime-deploy: `tests/cloud/` の応答→DTO 変換ヘルパが 2 系統（broker タスク 4.2 のテストローカルヘルパと deploy タスク 7 の `broker_adapters.py`）で二重実装になる。deploy 実装時に統合するか、broker design に「後続スペックのアダプタで置き換え可」と注記する
+3. extraction-pipeline ⇔ core-naming-engine: 日付フォールバック（スキャンタイムスタンプ）の所有が二重に読める。mapper は `document_date=None, date_has_era=False` を渡すだけで、フォールバックは命名エンジン側の責務と明記する
+4. 共有ディレクトリ（`tests/cloud/`、`src/scanner_rename/adapters/`）に触るタスクの `_Boundary:` 注釈が部分的。多重クレームは現状ないが、実装前に注釈を揃えると安全
 
 ## PBI-ph0-019
 
