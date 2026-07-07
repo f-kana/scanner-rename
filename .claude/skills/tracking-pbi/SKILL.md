@@ -34,7 +34,8 @@ description: |
 1. `docs/product-backlog.md` を読む
 2. 該当 PBI の行を見つける（PBI ID で検索）
 3. `- [ ]` を `- [~]` に変更する
-4. 通常の作業に進む
+4. `docs/pbi-notes/` に該当 PBI ID で始まるファイルがあれば Read してコンテキストに取り込む
+5. 通常の作業に進む
 
 ### 作業完了時
 
