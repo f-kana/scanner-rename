@@ -27,3 +27,7 @@ npm install
 
 # APM パッケージのインストール
 uv run apm install
+
+# Git hooks のインストール（pre-commit と commit-msg）
+pre-commit install
+pre-commit install --hook-type commit-msg
