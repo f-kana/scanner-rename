@@ -106,10 +106,7 @@ description: |
 
 ### PBI詳細の移動
 
-移動漏れとして検出した PBI の詳細について、`my-development-workflow` Step 4 と同じ手順で処理する:
-
-1. `docs/pbi-notes/<pbi-id>.md` を新規作成（WHY 中心のテンプレートで記述）
-2. `docs/product-backlog.md` の `# PBI詳細` セクションから当該 PBI の記述を削除
+移動漏れとして検出した PBI について、`tracking-pbi` スキルを発動して完了後処理を行う。
 
 ---
 

@@ -8,7 +8,7 @@
 
 ### ある場合 → docs/pbi-notes/ へ移動
 
-1. `docs/pbi-notes/<pbi-id>.md` を新規作成（例: `docs/pbi-notes/ph0-026.md`）
+1. `docs/pbi-notes/<pbi-id>_<pbi-summary>.md` を新規作成（例: `docs/pbi-notes/ph0-026_pbi-notes-archive.md`）
 2. 以下のテンプレートで WHY 中心のノートを書く:
 
 ```markdown
