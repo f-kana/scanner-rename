@@ -1,6 +1,8 @@
 # Pre-commit hooks configuration
 # See https://pre-commit.com for more information
 
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
   # Gitleaks: Secret scanning (runs first for security priority)
   - repo: https://github.com/gitleaks/gitleaks
