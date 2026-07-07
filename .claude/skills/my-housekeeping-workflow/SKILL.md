@@ -34,9 +34,10 @@ description: |
 ### ブランチ / worktree
 
 1. `git fetch -p` でリモートの最新状態を取得
-2. マージ済みローカルブランチの検出
-3. `.claude/worktrees/` 以下の worktree 残骸の検出
-4. `worktree-*` スタブブランチの検出（EnterWorktree の命名制約回避で残るもの。ADR-0008 参照）
+2. ローカルのmainブランチよりリモートのmainブランチが進んでいる場合は、リモートをローカルに取り込む。（点検フェーズだが、この処理だけは特例で、即取り込みを実行する。）
+3. マージ済みローカルブランチの検出
+4. `.claude/worktrees/` 以下の worktree 残骸の検出
+5. `worktree-*` スタブブランチの検出（EnterWorktree の命名制約回避で残るもの。ADR-0008 参照）
 
 ### settings
 

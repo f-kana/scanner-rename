@@ -60,7 +60,6 @@
       "Edit(*.yaml)",
       "Edit(*.yml)",
       "Read",
-      "Read(**/.claude/**)",
       "Skill",
       "WebSearch",
       "Write(tmp/**)",
