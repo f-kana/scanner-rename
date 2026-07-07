@@ -74,6 +74,20 @@ BEHIND=$(git rev-list --count HEAD..origin/$DEFAULT_BRANCH 2>/dev/null || echo 0
 
 PR マージによりローカルの main が遅れていることが多く、古いベースからブランチが切られる問題を防ぐ。確認プロンプトは不要。
 
+## EnterWorktree 後のパス規律
+
+EnterWorktree 後は、移行**前**に取得した絶対パス（例: `/workspaces/scanner-rename-initial-docs/...`）を
+そのまま Read/Edit に使ってはならない。worktree の CWD が変わるため、同じ絶対パスが
+main リポジトリのファイルを指し続け、意図せず main 側を編集してしまう。
+
+移行後の正しい手順:
+
+1. `pwd` で新しい CWD（worktree パス）を確認する
+2. ファイルパスは worktree の CWD を起点に導出する
+   - 相対パス: `find . -name "target-file"` で再探索
+   - 絶対パス: `$(pwd)/path/to/file` の形で組み立てる
+3. 移行前に使った絶対パスをそのまま流用しない
+
 ## 言語指定
 
 このスキルの指示は英語で書かれていますが、ユーザーへの応答はすべて日本語で行ってください。技術用語は英語のままで構いません。
