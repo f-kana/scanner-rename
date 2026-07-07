@@ -57,6 +57,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] PBI-ph0-023: `my-development-workflow` の軽量フローに Worktree オプションを追加。重量作業と並行して軽量作業を行う場合でも、ブランチ競合を避けるために Worktree を使えるようにする。
 - [x] PBI-ph0-024: apm-usage SKILLの追加
 - [x] PBI-ph0-025: curating-harness の APM 利用可否判定ロジック追加。外部スキル導入時に「対象 repo に apm.yml がない」だけで APM を除外する誤判断を防ぐ。path: 仮想パッケージ形式の活用基準も明記する。
+- [x] PBI-ph0-026: 完了済みPBI詳細の移動・記録 Harness 整備。`product-backlog.md` の PBI詳細セクションから完了済みPBI詳細を `docs/pbi-notes/` に移動する仕組みを追加。`my-development-workflow` にクローズアウトノート作成ステップ、`my-housekeeping-workflow` に移動漏れ検出ステップ、`tracking-pbi` に `[x]` マーク時の注意書きを追加する。
 
 ## Phase 1: cc-sdd 実行
 
@@ -107,63 +108,5 @@ Mac ホスト側で動作するテストブローカーの最小実装。
 # PBI詳細
 
 詳細を補足する必要のあるPBIについて、個別に記述する。
-SDDでSpec/Requirementを定義するまでの暫定的な情報置き場であり、
-Spec/Requirement作成時にここからは消す。
-
-## PBI-ph0-019
-
-### 背景
-
-`skill-creator` の Eval など、HTML を生成して VS Code Built-in ブラウザで目視確認したい場面がある。Built-in ブラウザは Host OS 側のパスで動作するが、Claude Code はデフォルトで DevContainer 側のパス（`/workspaces/...`）しか知らないため、そのパスを提示してもブラウザがファイルを開けない。
-
-DevContainer 内では `/proc/1/mountinfo` を読むことで Host OS 側のマウントパスを取得できる（Mac + Podman 環境で確認済み）。
-
-### 要件
-
-- DevContainer パスを Host OS パスに変換して提示する Harness（SKILL または Hook）を整備する
-- `/proc/1/mountinfo` からワークスペースのマウント情報を取得してパス変換する
-- 他の SKILL に依存しない自己完結した実装とする
-- Windows + WSL + Docker 環境でも動作する設計とする（ただし動作未検証）
-  - WSL 環境では `/proc/1/mountinfo` のマウント表記が異なる可能性があるため、フォールバック処理を検討すること
-
-## PBI-ph0-020
-
-security-notes.md と initial-context.md の隔離モデル記述が実環境と乖離している。
-
-- 文書の記述: 「GCP 認証情報はホストのみに存在し、DevContainer にはマウントしない」「GCP 認証情報はブローカーのみが利用できる」
-- 実態: `devcontainer.json` が named volume `gcloud-config-*` を `/home/vscode/.config/gcloud` にマウントし、ADC がコンテナ内に存在する。`docs/dev-setup.md` はコンテナ内での `gcloud auth application-default login` を正規手順として案内している（Claude Code 自身の Vertex 認証に必要な構成）
-
-やること:
-
-- `docs/security-notes.md` の「ローカル隔離モデル」「DevContainer に認証情報をマウントしない」節を実態に合わせて書き直す。「ADC はコンテナ内に存在するが、settings.json の deny リストと規範ルールで Claude Code からの読み取りを抑止する（受容済みリスク）」というモデルに更新する
-- あわせて「deny リストは列挙式のベストエフォートであり完全な技術的強制ではない。防御の主軸はブローカー設計・gitleaks・レビューである」という割り切りを明文化する
-- `docs/initial-context.md` の同趣旨の記述（L305 付近）も同期させる
-- クラウド統合テストをブローカー経由に限定する方針自体は変更しない
-
-ph1-001（cc-sdd 実行）はこれらの文書を一次インプットにするため、本 PBI を先に完了させること。
-
-## PBI-ph0-021
-
-ph0-012 レビューで挙がった軽微な即修正のバッチ。互いに独立しており、まとめて 1 ブランチで処理してよい。
-
-1. CLAUDE.md「開発ワークフロー全体」節を my-development-workflow 経由の手順に書き直す（現状は tracking-pbi 等を直接呼ぶ旧手順で、スキル側の「必ず my-development-workflow を経由」という指示と矛盾）
-2. `.claude/settings.json` の deny に `git commit` の `--no-verify` を塞ぐエントリを追加（現状 `Bash(git commit *)` が allow のため gitleaks を素通りできる）
-3. `.claude/skills/clean-branches/SKILL.md` の `${CLAUDE_PLUGIN_ROOT}` 参照を修正（未定義変数。外部 APM 由来スキルのため skill-context-injector での補正を優先し、不可なら直接編集）
-4. `.claude/skills/classifying-harness/SKILL.md` と `docs/adr-candidates/0008` の skill-context-injector パス誤記を実パス（`.claude/hooks/skill-context-injector/skill-context-injector.sh`、`.claude/hooks/skill-context-injector/context/`）に修正
-5. `.claude/hooks/skill-context-injector/skill-context-injector.sh` に `set -euo pipefail` を追加（他 hook と統一）
-6. `docs/adr-candidates/0007`（byobu）のステータスを「候補」から「Accepted」に更新（実装済みのため）
-7. `.claude/skills/my-development-workflow/SKILL.md` の description「フローを選択・宣言し、そのまま実行する」を本文 Step 2 に合わせて修正する。正は本文側の「宣言し、ユーザーの承認を待ってから実行」（ユーザー裁定済み）
-
-## PBI-ph0-016
-
-個別のプロセス想定は以下などだが、個別のSKILL/SubAgent実装とし、それらは別PBIでやる。
-
-- settings.json整頓、Memory整頓
-- Git Fetch -p
-- PRマージ済みGit Branch/Worktree削除
-
-ph0-012 レビューで以下をスコープに追加（詳細は各指摘 ID で `tmp/pbi-ph0-012/review-report.md` を参照。tmp が消えていたら本節の記述を正とする）:
-
-- ask リストの整理: bypassPermissions 下で `ask`（git push・settings 編集）は機能しない。本当に止めたい操作は deny へ移すか、不要なら ask を削除する（R-05）
-- `.claude/worktrees/` の worktree 残骸掃除の担い手を決める。現状は finishing-a-development-branch も clean-branches も対象外で、残骸があると tracking-pbi の照会が誤答する（R-12）
-- settings.local.json の整理: settings.json との重複エントリ、テスト用一時エントリ、`//` 始まりパス、引数なし `Bash(cat)`/`Bash(touch)` の削除（R-15）
+cc-sdd を経由しない PBI は完了時に `docs/pbi-notes/` へ移動する。
+cc-sdd を経由する PBI は Spec/Requirement 作成時にここから削除する。
