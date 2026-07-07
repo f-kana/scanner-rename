@@ -57,6 +57,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] PBI-ph0-023: `my-development-workflow` の軽量フローに Worktree オプションを追加。重量作業と並行して軽量作業を行う場合でも、ブランチ競合を避けるために Worktree を使えるようにする。
 - [x] PBI-ph0-024: apm-usage SKILLの追加
 - [x] PBI-ph0-025: curating-harness の APM 利用可否判定ロジック追加。外部スキル導入時に「対象 repo に apm.yml がない」だけで APM を除外する誤判断を防ぐ。path: 仮想パッケージ形式の活用基準も明記する。
+- [x] PBI-ph0-026: 完了済みPBI詳細の移動・記録 Harness 整備。`product-backlog.md` の PBI詳細セクションから完了済みPBI詳細を `docs/pbi-notes/` に移動する仕組みを追加。`my-development-workflow` にクローズアウトノート作成ステップ、`my-housekeeping-workflow` に移動漏れ検出ステップ、`tracking-pbi` に `[x]` マーク時の注意書きを追加する。
 
 ## Phase 1: cc-sdd 実行
 
