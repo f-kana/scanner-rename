@@ -64,10 +64,19 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 
 ここから先は cc-sdd の成果物が作業の正となる。
 
-- [ ] PBI-ph1-001: cc-sdd の実行。入口は `/kiro-discovery`。Phase 2〜6 の分解とスペック分割（single / multi）の対応を Discovery で突き合わせる。着手前に ph0-020（隔離モデルのドキュメント修正）を完了させること。
+- [ ] PBI-ph1-001: cc-sdd の実行。入口は `/kiro-discovery`。Phase 2〜6 の分解とスペック分割（single / multi）の対応を Discovery で突き合わせる。
 - [ ] PBI-ph1-002: 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー
 
-## Phase 2: コアドメインロジック
+## Phase 2〜6: プロダクト本開発
+
+以下は cc-sdd 実行前の想定 PBI。PBI-ph1-001 の Discovery で再定義される予定。現時点のレビューで不足している観点:
+
+- LLM プロンプト設計・チューニングの工程（Gemini への抽出指示、命名ポリシーのプロンプト化）
+- Gemini 構造化出力のスキーマ設計（メタデータ抽出の入出力定義）
+- エラーハンドリング・リトライ戦略（Cloud Run Job の再試行、Drive API レート制限等）
+- ローカル開発での E2E 動作確認（Broker 経由でジョブ全体を1回通すPBI）
+
+### Phase 2: コアドメインロジック
 
 外部サービス依存なしの純粋 Python ロジック。
 
@@ -78,25 +87,25 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [ ] PBI-ph2-005: ユニットテスト
 - [x] PBI-ph2-006: cc-sddの上位に置くSKILL: development-workflowの作成。（Phase 0 で `my-development-workflow` として前倒し実装済み。ph0-012 レビューで確認しクローズ）
 
-## Phase 3: ポート／アダプタとフェイク統合テスト
+### Phase 3: ポート／アダプタとフェイク統合テスト
 
 - [ ] PBI-ph3-001: Drive、OCR、LLM 抽出のインターフェース定義
 - [ ] PBI-ph3-002: フェイクアダプタの実装
 - [ ] PBI-ph3-003: `integration_fake` テストでアプリケーションフロー全体を検証
 
-## Phase 4: GCP Test Broker v0
+### Phase 4: GCP Test Broker v0
 
 Mac ホスト側で動作するテストブローカーの最小実装。
 
 - [ ] PBI-ph4-001: OCR フィクスチャと抽出フィクスチャ用のエンドポイント
 - [ ] PBI-ph4-002: `broker/` に実装
 
-## Phase 5: 実アダプタとクラウド統合テスト
+### Phase 5: 実アダプタとクラウド統合テスト
 
 - [ ] PBI-ph5-001: Google Drive API、Document AI、Gemini の実アダプタ
 - [ ] PBI-ph5-002: ブローカー経由のクラウド統合テスト
 
-## Phase 6: パッケージングとデプロイと監視
+### Phase 6: パッケージングとデプロイと監視
 
 - [ ] PBI-ph6-001: Cloud Run Job（Dockerfile、エントリポイント）
 - [ ] PBI-ph6-002: 構造化ログと Cloud Monitoring ログベースアラート
