@@ -41,6 +41,12 @@ description: |
 1. `docs/product-backlog.md` を読む（最新の状態を取得するため）
 2. 該当 PBI の行を見つける
 3. `- [~]` または `- [ ]` を `- [x]` に変更する
+4. `docs/product-backlog.md` の `# PBI詳細` セクションに当該 PBI の記述があれば、
+   `my-development-workflow` Step 4 の手順に従って `docs/pbi-notes/` へ移動する
+
+> `my-development-workflow` 経由で完了マークを行う場合、Step 4 がこの処理を担う。
+> `tracking-pbi` を直接呼び出した場合（ユーザーが手動で完了報告する場合等）は
+> このスキルがリマインドする。
 
 ## PBI 行のフォーマット
 

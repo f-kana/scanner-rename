@@ -42,6 +42,14 @@ description: |
 
 `.claude/settings.json` と `.claude/settings.local.json` の重複エントリ・死にエントリの検出。
 
+### PBI詳細の移動漏れ
+
+`docs/product-backlog.md` の `# PBI詳細` セクションを読み、
+完了済み（`[x]`）PBI の詳細が残っていないか確認する。
+
+- 完了済み PBI の詳細が残っている → 移動漏れとして検出
+- 未着手・進行中（`[ ]`/`[~]`）PBI の詳細が残っている → 正常（移動しない）
+
 ### メモリ
 
 `MEMORY.md` とメモリファイル群を読み、陳腐化候補を検出する。
@@ -58,6 +66,7 @@ description: |
 - worktree 残骸: 1 件
 - settings: 重複エントリ 2 件
 - メモリ: 陳腐化候補 1 件
+- PBI詳細の移動漏れ: 2 件（ph0-019, ph0-020）
 
 上記を掃除してよいですか？（個別に除外も可能です）
 ```
@@ -94,6 +103,13 @@ description: |
 ### メモリ整頓
 
 陳腐化したメモリファイルの更新・削除を提案する。専用スキルが実装されたら差し替える。
+
+### PBI詳細の移動
+
+移動漏れとして検出した PBI の詳細について、`my-development-workflow` Step 4 と同じ手順で処理する:
+
+1. `docs/pbi-notes/<pbi-id>.md` を新規作成（WHY 中心のテンプレートで記述）
+2. `docs/product-backlog.md` の `# PBI詳細` セクションから当該 PBI の記述を削除
 
 ---
 
