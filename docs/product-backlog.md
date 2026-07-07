@@ -33,7 +33,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 
 - [x] PBI-ph0-008: 長いLLM処理が終わった or 人間への承認依頼で長い処理が中断した場合に、効果音が出るようにしたい。なぜなら、タスクの終わり/中断に僕が気づけるからだ。
 - [x] PBI-ph0-009: Secret scanning の導入（pre-commit に gitleaks を追加）。認証情報隔離は整備済だが、git commit レベルでの自動検出がない。
-- [~] PBI-ph0-010: Conventional Commits の導入（commitlint + commit-msg hook）。コミットメッセージの統一フォーマット化。
+- [x] PBI-ph0-010: Conventional Commits の導入（commitlint + commit-msg hook）。コミットメッセージの統一フォーマット化。
 - [x] PBI-ph0-011-2: statusLine のカスタマイズ（モデル名、コンテキスト使用量、コスト情報の表示）
 
 ### CC-SDD
@@ -57,6 +57,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] PBI-ph0-023: `my-development-workflow` の軽量フローに Worktree オプションを追加。重量作業と並行して軽量作業を行う場合でも、ブランチ競合を避けるために Worktree を使えるようにする。
 - [x] PBI-ph0-024: apm-usage SKILLの追加
 - [x] PBI-ph0-025: curating-harness の APM 利用可否判定ロジック追加。外部スキル導入時に「対象 repo に apm.yml がない」だけで APM を除外する誤判断を防ぐ。path: 仮想パッケージ形式の活用基準も明記する。
+- [x] PBI-ph0-026: 完了済みPBI詳細の移動・記録 Harness 整備。`product-backlog.md` の PBI詳細セクションから完了済みPBI詳細を `docs/pbi-notes/` に移動する仕組みを追加。`my-development-workflow` にクローズアウトノート作成ステップ、`my-housekeeping-workflow` に移動漏れ検出ステップ、`tracking-pbi` に `[x]` マーク時の注意書きを追加する。
 
 ## Phase 1: cc-sdd 実行
 
@@ -87,8 +88,10 @@ PBI-ph1-001 の Discovery / `/kiro-spec-batch`（2026-07-08）で、旧想定 PB
 # PBI詳細
 
 詳細を補足する必要のあるPBIについて、個別に記述する。
-SDDでSpec/Requirementを定義するまでの暫定的な情報置き場であり、
-Spec/Requirement作成時にここからは消す。
+
+- 本来のPBI詳細の置き場は `docs/pbi-notes/` であり、以下は軽量な・暫定的なPBI詳細情報置き場。
+- cc-sdd を経由しない PBI は完了時に `docs/pbi-notes/` へ移動する。
+- cc-sdd を経由する PBI は Spec/Requirement 作成時にここから削除する。
 
 ## PBI-ph1-002
 
