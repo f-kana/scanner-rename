@@ -236,13 +236,48 @@ Fit、Trust、Riskを組み合わせて判断する。
 
 1. Claude Code Plugin Marketplace: 公式/信頼できるPluginがある場合に優先。チーム標準にする場合はバージョン・権限・更新方針を明確にする。
 
-2. APM: `apm.yml` がある場合や、チーム配布・バージョン固定・lockfileが必要な場合に優先。
+2. APM: チーム配布・バージョン固定・lockfileが必要な場合に優先。APM利用可否の判定は後述のサブステップに従う。
 
 3. fork/vendor: 公式ではないが有用、修正が必要、upstream更新をそのまま受けたくない、監査済み状態を固定したい場合に優先。
 
 4. skill-context-injector: APM等で導入した外部Skillの挙動だけを補正したい場合。SKILL.mdを直接編集せず、PJ固有の小さなコンテキストを注入する。
 
 5. 手動配置: `curl`で取得してファイルを直接作成する方法は最終手段。使う場合は取得元URL・commit SHA/tag・license・変更差分・レビュー者を記録する。
+
+#### Step 9a: APM利用可否の判定
+
+APM は対象 repo に `apm.yml` がなくてもインストールできる。「対象 repo に `apm.yml` がない」は APM 不可の理由にならない。以下のフローで判定する。
+
+判定前提: APM の依存形式の詳細は `apm-usage` スキルの `dependencies.md` を参照すること。モデルの学習カットオフより APM が新しい可能性があるため、自身の事前知識ではなくスキル内ドキュメントを正とする。
+
+判定フロー:
+
+1. 対象 repo に `apm.yml` があるか確認する
+   - ある → string form (`owner/repo#ref`) で APM 可。通常ケース
+2. `apm.yml` がない場合、repo 全体の規模を確認する（ファイル数・内容）
+   - スキルに必要なファイルだけで構成されている小規模 repo → string form で APM 可
+   - 不要なファイル（ソースコード、CI設定、ベンダーコード等）を大量に含む → Step 3 へ
+3. object form の `path:` 仮想パッケージで必要部分だけを取り込めるか確認する
+   - スキルが単一ファイル（例: `SKILL.md`）→ `path: SKILL.md` で取り込み可能か確認
+   - スキルがサブディレクトリ（例: `skills/foo/`）→ `path: skills/foo` で取り込み可能か確認
+   - 可能 → object form で APM 可
+4. `path:` でも適切に切り出せない場合 → 手動配置（curl等）。README に APM を使わない理由を記録する
+
+object form の記述例:
+
+```yaml
+# 単一ファイルの仮想パッケージ
+- git: owner/repo
+  path: SKILL.md
+  ref: <commit-sha-or-tag>
+
+# サブディレクトリの仮想パッケージ
+- git: owner/repo
+  path: skills/target-skill
+  ref: v1.0.0
+```
+
+判定結果の記録: APM を使わない判断をした場合、導入先ディレクトリの README に理由を記載する（例: herdr の `README.md` のように）。将来 repo 側が APM 対応した場合の移行判断に役立てる。
 
 ## SubAgent利用方針
 

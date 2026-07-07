@@ -56,6 +56,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 - [x] PBI-ph0-022: Herdr SKILLの導入(APM) `https://github.com/ogulcancelik/herdr/blob/master/SKILL.md`
 - [x] PBI-ph0-023: `my-development-workflow` の軽量フローに Worktree オプションを追加。重量作業と並行して軽量作業を行う場合でも、ブランチ競合を避けるために Worktree を使えるようにする。
 - [x] PBI-ph0-024: apm-usage SKILLの追加
+- [ ] PBI-ph0-025: curating-harness の APM 利用可否判定ロジック追加。外部スキル導入時に「対象 repo に apm.yml がない」だけで APM を除外する誤判断を防ぐ。path: 仮想パッケージ形式の活用基準も明記する。
 
 ## Phase 1: cc-sdd 実行
 
