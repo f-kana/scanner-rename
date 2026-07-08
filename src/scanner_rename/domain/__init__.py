@@ -16,6 +16,12 @@ from scanner_rename.domain.file_state import (
     strip_state_prefix,
     with_state_prefix,
 )
+from scanner_rename.domain.japanese_era import (
+    Era,
+    EraDate,
+    era_to_gregorian,
+    to_era,
+)
 from scanner_rename.domain.scanner_filename import (
     ScannerFilename,
     parse_scanner_filename,
@@ -24,12 +30,16 @@ from scanner_rename.domain.scanner_filename import (
 __all__ = [
     "ClassifiedFilename",
     "DomainError",
+    "Era",
     "EraConversionError",
+    "EraDate",
     "FileState",
     "NamingInputError",
     "ScannerFilename",
     "classify_filename",
+    "era_to_gregorian",
     "parse_scanner_filename",
     "strip_state_prefix",
+    "to_era",
     "with_state_prefix",
 ]
