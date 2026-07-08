@@ -1,7 +1,7 @@
 """元号テーブルと西暦⇔元号の相互変換のテスト.
 
 各改元日の当日・前日の境界パラメタライズと双方向変換の整合を検証する。
-Requirements: 3.1, 3.2, 3.3, 3.6
+Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6
 """
 
 from datetime import date
@@ -9,7 +9,13 @@ from datetime import date
 import pytest
 
 from scanner_rename.domain.errors import EraConversionError
-from scanner_rename.domain.japanese_era import Era, EraDate, era_to_gregorian, to_era
+from scanner_rename.domain.japanese_era import (
+    Era,
+    EraDate,
+    era_to_gregorian,
+    format_date_component,
+    to_era,
+)
 
 
 @pytest.mark.unit
@@ -230,3 +236,54 @@ class TestBidirectionalConsistency:
             era_date.era, era_date.year, gregorian.month, gregorian.day
         )
         assert restored == gregorian
+
+
+@pytest.mark.unit
+class TestFormatDateComponent:
+    """ファイル名用の日付コンポーネント整形テスト (Req 3.4, 3.5)."""
+
+    def test_with_era_reiwa_3(self) -> None:
+        """令和3年10月1日を元号付きで整形 → 20211001(R3) (Req 3.4)."""
+        result = format_date_component(date(2021, 10, 1), with_era=True)
+        assert result == "20211001(R3)"
+
+    def test_without_era(self) -> None:
+        """西暦のみ整形 → YYYYMMDD (Req 3.5)."""
+        result = format_date_component(date(2021, 10, 1), with_era=False)
+        assert result == "20211001"
+
+    def test_with_era_year_one(self) -> None:
+        """元号年 1 は R1 のように数字 1 を用いる（元年ではない）."""
+        result = format_date_component(date(2019, 5, 1), with_era=True)
+        assert result == "20190501(R1)"
+
+    @pytest.mark.parametrize(
+        ("d", "expected"),
+        [
+            # 平成元年
+            (date(1989, 1, 8), "19890108(H1)"),
+            # 平成31年（平成最終日）
+            (date(2019, 4, 30), "20190430(H31)"),
+            # 昭和元年
+            (date(1926, 12, 25), "19261225(S1)"),
+            # 昭和64年（昭和最終日）
+            (date(1989, 1, 7), "19890107(S64)"),
+            # 大正元年
+            (date(1912, 7, 30), "19120730(T1)"),
+            # 明治元年
+            (date(1868, 10, 23), "18681023(M1)"),
+        ],
+    )
+    def test_with_era_various_eras(self, d: date, expected: str) -> None:
+        """各元号での整形が正しい."""
+        assert format_date_component(d, with_era=True) == expected
+
+    def test_without_era_zero_padded(self) -> None:
+        """月日が 1 桁の場合もゼロ埋めされる."""
+        result = format_date_component(date(2025, 1, 5), with_era=False)
+        assert result == "20250105"
+
+    def test_with_era_zero_padded(self) -> None:
+        """元号付きでも月日がゼロ埋めされる."""
+        result = format_date_component(date(2025, 1, 5), with_era=True)
+        assert result == "20250105(R7)"

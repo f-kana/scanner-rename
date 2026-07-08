@@ -20,6 +20,7 @@ from scanner_rename.domain.japanese_era import (
     Era,
     EraDate,
     era_to_gregorian,
+    format_date_component,
     to_era,
 )
 from scanner_rename.domain.scanner_filename import (
@@ -38,6 +39,7 @@ __all__ = [
     "ScannerFilename",
     "classify_filename",
     "era_to_gregorian",
+    "format_date_component",
     "parse_scanner_filename",
     "strip_state_prefix",
     "to_era",

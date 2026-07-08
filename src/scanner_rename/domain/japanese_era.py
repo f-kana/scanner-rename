@@ -4,7 +4,7 @@
 西暦→元号+元号年、元号+年月日→西暦の双方向変換を提供する。
 改元日当日は新元号として扱う。
 
-Requirements: 3.1, 3.2, 3.3, 3.6
+Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6
 """
 
 from __future__ import annotations
@@ -55,6 +55,29 @@ class EraDate:
 
     era: Era
     year: int  # 元号年（1 = 元年）
+
+
+def format_date_component(d: date, *, with_era: bool) -> str:
+    """ファイル名用の日付コンポーネントを整形する.
+
+    元号表記由来の日付は ``YYYYMMDD(<元号略号><元号年>)`` 形式で整形し、
+    西暦のみ表記の日付は ``YYYYMMDD`` 形式で整形する。
+
+    Args:
+        d: 整形対象の西暦日付
+        with_era: ソース文書が元号表記か。True なら元号サフィックスを付与する
+
+    Returns:
+        整形された日付文字列（例: ``"20211001(R3)"`` または ``"20211001"``）
+
+    Raises:
+        EraConversionError: ``with_era=True`` で元号対応表の範囲外の日付
+    """
+    ymd = d.strftime("%Y%m%d")
+    if not with_era:
+        return ymd
+    era_date = to_era(d)
+    return f"{ymd}({era_date.era.abbreviation}{era_date.year})"
 
 
 def to_era(d: date) -> EraDate:
