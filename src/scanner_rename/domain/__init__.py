@@ -29,6 +29,7 @@ from scanner_rename.domain.naming import (
     Period,
     PeriodKind,
     YearMonth,
+    build_filename,
     validate_naming_input,
 )
 from scanner_rename.domain.sanitize import (
@@ -51,6 +52,7 @@ __all__ = [
     "MAX_FILENAME_LENGTH",
     "NamingInput",
     "NamingInputError",
+    "build_filename",
     "Period",
     "PeriodKind",
     "ScannerFilename",
