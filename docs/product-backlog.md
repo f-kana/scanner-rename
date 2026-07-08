@@ -66,7 +66,7 @@ cc-sdd が正規の `requirements.md`、`design.md`、`tasks.md` を生成した
 ここから先は cc-sdd の成果物が作業の正となる。
 
 - [x] PBI-ph1-001: cc-sdd の実行。入口は `/kiro-discovery`。Phase 2〜6 の分解とスペック分割（single / multi）の対応を Discovery で突き合わせる。（2026-07-08 完了: 4 スペック分割を `.kiro/steering/roadmap.md` に記録し、`/kiro-spec-batch` で全スペック生成・クロススペックレビュー済み）
-- [ ] PBI-ph1-002: 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー。Fable セッションで実施する。クロススペックレビューの minor 指摘 4 件（下記 PBI詳細）を観点に含める。
+- [x] PBI-ph1-002: 生成された `requirements.md`、`design.md`、`tasks.md` のレビュー。Fable セッションで実施する。クロススペックレビューの minor 指摘 4 件を観点に含める。（2026-07-08 完了: 4 件 + 新規 1 件を反映。詳細は `docs/pbi-notes/ph1-002_spec-review.md`）
 
 ## Phase 2〜6: プロダクト本開発（cc-sdd スペックに再定義済み）
 
@@ -92,12 +92,3 @@ PBI-ph1-001 の Discovery / `/kiro-spec-batch`（2026-07-08）で、旧想定 PB
 - 本来のPBI詳細の置き場は `docs/pbi-notes/` であり、以下は軽量な・暫定的なPBI詳細情報置き場。
 - cc-sdd を経由しない PBI は完了時に `docs/pbi-notes/` へ移動する。
 - cc-sdd を経由する PBI は Spec/Requirement 作成時にここから削除する。
-
-## PBI-ph1-002
-
-`/kiro-spec-batch`（2026-07-08）のクロススペックレビューで挙がった minor 指摘（critical / important はゼロ）。レビュー時に以下を確認・反映する:
-
-1. extraction-pipeline ⇔ gcp-test-broker: `ExtractedText.value` の非空制約が型レベル不変条件（`__post_init__`）か否かを extraction-pipeline 側で明記し、不変条件なら Broker の `ExtractedTextPayload` にも `min_length=1` を追加する
-2. gcp-test-broker ⇔ cloud-runtime-deploy: `tests/cloud/` の応答→DTO 変換ヘルパが 2 系統（broker タスク 4.2 のテストローカルヘルパと deploy タスク 7 の `broker_adapters.py`）で二重実装になる。deploy 実装時に統合するか、broker design に「後続スペックのアダプタで置き換え可」と注記する
-3. extraction-pipeline ⇔ core-naming-engine: 日付フォールバック（スキャンタイムスタンプ）の所有が二重に読める。mapper は `document_date=None, date_has_era=False` を渡すだけで、フォールバックは命名エンジン側の責務と明記する
-4. 共有ディレクトリ（`tests/cloud/`、`src/scanner_rename/adapters/`）に触るタスクの `_Boundary:` 注釈が部分的。多重クレームは現状ないが、実装前に注釈を揃えると安全
