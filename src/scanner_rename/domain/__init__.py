@@ -24,6 +24,13 @@ from scanner_rename.domain.japanese_era import (
     format_date_component,
     to_era,
 )
+from scanner_rename.domain.naming import (
+    NamingInput,
+    Period,
+    PeriodKind,
+    YearMonth,
+    validate_naming_input,
+)
 from scanner_rename.domain.sanitize import (
     MAX_FILENAME_LENGTH,
     sanitize_component,
@@ -42,8 +49,12 @@ __all__ = [
     "EraDate",
     "FileState",
     "MAX_FILENAME_LENGTH",
+    "NamingInput",
     "NamingInputError",
+    "Period",
+    "PeriodKind",
     "ScannerFilename",
+    "YearMonth",
     "classify_filename",
     "era_to_gregorian",
     "format_date_component",
@@ -53,5 +64,6 @@ __all__ = [
     "sanitize_filename",
     "strip_state_prefix",
     "to_era",
+    "validate_naming_input",
     "with_state_prefix",
 ]
