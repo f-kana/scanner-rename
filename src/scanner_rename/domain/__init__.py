@@ -9,9 +9,15 @@ from scanner_rename.domain.errors import (
     EraConversionError,
     NamingInputError,
 )
+from scanner_rename.domain.scanner_filename import (
+    ScannerFilename,
+    parse_scanner_filename,
+)
 
 __all__ = [
     "DomainError",
     "EraConversionError",
     "NamingInputError",
+    "ScannerFilename",
+    "parse_scanner_filename",
 ]
