@@ -1,7 +1,7 @@
 # Implementation Plan: core-naming-engine
 
-- [ ] 1. Foundation: ドメインパッケージ基盤の整備
-- [ ] 1.1 domain サブパッケージの骨格とドメイン例外階層を作成する
+- [x] 1. Foundation: ドメインパッケージ基盤の整備
+- [x] 1.1 domain サブパッケージの骨格とドメイン例外階層を作成する
   - `src/scanner_rename/domain/` と `tests/unit/` のパッケージ構造を新設する
   - 失敗を型で区別する例外階層（基底・元号範囲外・命名入力不備）を定義する
   - 例外の継承関係と型を検証する `unit` マーカー付きテストを追加する
