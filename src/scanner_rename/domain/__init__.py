@@ -4,6 +4,7 @@
 後のタスクで値オブジェクト・関数を追加していく。
 """
 
+from scanner_rename.domain.dedup import resolve_duplicate
 from scanner_rename.domain.errors import (
     DomainError,
     EraConversionError,
@@ -47,6 +48,7 @@ __all__ = [
     "era_to_gregorian",
     "format_date_component",
     "parse_scanner_filename",
+    "resolve_duplicate",
     "sanitize_component",
     "sanitize_filename",
     "strip_state_prefix",
