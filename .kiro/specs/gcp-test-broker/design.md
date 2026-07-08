@@ -287,7 +287,7 @@ class FixtureRepository:
 
 ```python
 class FixtureRequest(BaseModel):
-    case_id: str                     # パターン検証は fixtures 層と二重にせず、ここで pattern 制約を宣言
+    case_id: str                     # 素の str。形式検証の正本は fixtures 層（InvalidCaseIdError を main が 422 ErrorResponse に変換）
 
 class OcrFixture(BaseModel):
     text: str                        # OcrResult.text に対応（空文字列は正常値）
@@ -304,7 +304,7 @@ class ExtractedDatePayload(BaseModel):
     confidence: float                # 0.0 <= x <= 1.0
 
 class ExtractedTextPayload(BaseModel):
-    value: str
+    value: str                       # min_length=1（上流 ExtractedText.value の非空不変条件を鏡写し）
     evidence: str
     confidence: float
 
@@ -405,7 +405,7 @@ class ErrorResponse(BaseModel):
 - すべて `@pytest.mark.cloud`。ルート `pyproject.toml` の既定 `addopts`（`-m 'not cloud and not e2e_cloud'`）によりデフォルト実行から除外される（6.2）。実行は `uv run pytest -m cloud tests/cloud` を README に記載
 - 接続先は環境変数 `GCP_TEST_BROKER_URL`（既定 `http://host.docker.internal:8765`）。HTTP クライアントは標準ライブラリ `urllib.request`（ルートに依存を足さない）
 - conftest のセッションフィクスチャが `/health` へのプリフライトを行い、接続不能時は「Broker が起動していないか到達できない（起動手順は broker/README）」を明示するメッセージで `pytest.fail` する（6.4）
-- 契約適合検証（6.3）: OCR 応答 → `OcrResult(text=...)` を構築、抽出応答 → テストローカルヘルパで `DocumentExtraction`（および構成型）を構築し、frozen dataclass の `__post_init__` 不変条件を通す。ヘルパは `tests/cloud/` 内に閉じ、`src/` に変換モジュールを作らない（境界決定、research.md）
+- 契約適合検証（6.3）: OCR 応答 → `OcrResult(text=...)` を構築、抽出応答 → テストローカルヘルパで `DocumentExtraction`（および構成型）を構築し、frozen dataclass の `__post_init__` 不変条件を通す。ヘルパは `tests/cloud/` 内に閉じ、`src/` に変換モジュールを作らない（境界決定、research.md）。このヘルパは cloud-runtime-deploy が `tests/cloud/broker_adapters.py` を実装した時点でそちらに置き換えてよい（二重実装を残さない）
 - 検証対象ケースはサンプル 4 ケース + 未知 `case_id` の 404 応答。Broker 以外への接続を行わない（6.5。Google API のホスト名はコード中に現れない）
 
 ## Data Models

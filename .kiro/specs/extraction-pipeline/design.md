@@ -303,7 +303,7 @@ class DocumentExtraction:
     reason: str                      # 抽出判断の短い説明
 ```
 
-- Invariants: `confidence` は 0.0–1.0。`ExtractedPeriod` の種別ごとの必須フィールド欠落は `ValueError`。`evidence` に OCR 全文を入れない運用はプロンプト側の指示とし、型では強制しない
+- Invariants: `confidence` は 0.0–1.0。`ExtractedText.value` は非空（空・空白のみは `__post_init__` で `ValueError`。欠落はフィールド自体を `None` で表現する）。`ExtractedPeriod` の種別ごとの必須フィールド欠落は `ValueError`。`evidence` に OCR 全文を入れない運用はプロンプト側の指示とし、型では強制しない
 
 #### ports/errors
 
@@ -479,7 +479,7 @@ class PipelineConfig:
 
 - 判定規則（confidence_threshold との比較はすべて「未満で不採用」）:
   - `title` が `None` または信頼度が閾値未満 → `NeedsReview`（理由にフィールド名と信頼度を含める）
-  - `document_date` が `None` または閾値未満 → スキャンタイムスタンプの日付にフォールバック（`date_has_era=False`）
+  - `document_date` が `None` または閾値未満 → `NamingInput` に `document_date=None, date_has_era=False` を渡す（スキャンタイムスタンプへのフォールバックの実行は命名エンジン側の責務。core-naming-engine Req 4.7）
   - `issuer` / `period` が `None` または閾値未満 → 当該コンポーネントを省略（`None`）
   - `document_type` は命名に使用しない（処理結果の記録・診断用）
 - 採用された `ExtractedDate` は `value`（西暦）と `source_uses_japanese_era` を `NamingInput.document_date` / `date_has_era` に射影する。元号文字列そのものは渡さない（元号表記の生成は domain の責務）

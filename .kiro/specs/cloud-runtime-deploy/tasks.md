@@ -97,6 +97,7 @@
   - 観察可能な完了条件: Broker 起動下で `uv run pytest -m cloud tests/cloud` がグリーン、デフォルト実行では収集されない
   - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5_
   - _Depends: 1_
+  - _Boundary: tests/cloud broker_adapters（conftest.py は gcp-test-broker 所有・変更しない）_
 
 - [ ] 8. Broker 経由のローカル E2E を実装する
   - 上流のフェイク Drive にスキャナー生成名の 4 ファイル（高信頼 3 + 低信頼 1）を投入し、テスト用 Broker アダプタでパイプライン全体を 1 回実行する `e2e_cloud` テストを作る
@@ -105,6 +106,7 @@
   - 観察可能な完了条件: Broker 起動下で `uv run pytest -m e2e_cloud tests/e2e_cloud` がグリーン
   - _Requirements: 4.4, 9.1, 9.2, 9.3, 9.4, 9.5_
   - _Depends: 4.2, 7_
+  - _Boundary: tests/e2e_cloud_
 
 - [ ] 9. 全体整合を検証する
   - デフォルトのローカルテスト（`unit` + `integration_fake`）、Ruff、Pyright が全件グリーンであることを確認する
