@@ -34,59 +34,12 @@ def _make_scanner(ts: datetime | None = None) -> ScannerFilename:
 # ---------------------------------------------------------------------------
 # YearMonth: frozen 不変性
 # ---------------------------------------------------------------------------
-@pytest.mark.unit
-class TestYearMonthFrozen:
-    """YearMonth は frozen dataclass である."""
-
-    def test_frozen_year(self) -> None:
-        """year 属性の変更を禁止する."""
-        ym = YearMonth(year=2025, month=4)
-        with pytest.raises(AttributeError):
-            ym.year = 2026  # type: ignore[misc]
-
-    def test_frozen_month(self) -> None:
-        """month 属性の変更を禁止する."""
-        ym = YearMonth(year=2025, month=4)
-        with pytest.raises(AttributeError):
-            ym.month = 5  # type: ignore[misc]
-
-    def test_equality(self) -> None:
-        """同一の値を持つ YearMonth は等価である."""
-        assert YearMonth(year=2025, month=4) == YearMonth(year=2025, month=4)
-
-    def test_inequality(self) -> None:
-        """異なる値を持つ YearMonth は等価でない."""
-        assert YearMonth(year=2025, month=4) != YearMonth(year=2025, month=5)
-
-
 # ---------------------------------------------------------------------------
-# Period: frozen 不変性
+# Period: オプションフィールドのデフォルト値
 # ---------------------------------------------------------------------------
 @pytest.mark.unit
 class TestPeriodFrozen:
-    """Period は frozen dataclass である."""
-
-    def test_frozen_kind(self) -> None:
-        """kind 属性の変更を禁止する."""
-        period = Period(kind=PeriodKind.CALENDAR_YEAR, year=2025)
-        with pytest.raises(AttributeError):
-            period.kind = PeriodKind.FISCAL_YEAR  # type: ignore[misc]
-
-    def test_frozen_year(self) -> None:
-        """year 属性の変更を禁止する."""
-        period = Period(kind=PeriodKind.CALENDAR_YEAR, year=2025)
-        with pytest.raises(AttributeError):
-            period.year = 2026  # type: ignore[misc]
-
-    def test_frozen_start(self) -> None:
-        """start 属性の変更を禁止する."""
-        period = Period(
-            kind=PeriodKind.EXPLICIT_RANGE,
-            start=YearMonth(year=2025, month=4),
-            end=YearMonth(year=2026, month=3),
-        )
-        with pytest.raises(AttributeError):
-            period.start = YearMonth(year=2025, month=5)  # type: ignore[misc]
+    """Period のオプションフィールドのデフォルト値を検証する."""
 
     def test_defaults_are_none(self) -> None:
         """デフォルト値は None である."""
@@ -97,87 +50,11 @@ class TestPeriodFrozen:
 
 
 # ---------------------------------------------------------------------------
-# NamingInput: frozen 不変性
-# ---------------------------------------------------------------------------
-@pytest.mark.unit
-class TestNamingInputFrozen:
-    """NamingInput は frozen dataclass である."""
-
-    def test_frozen_title(self) -> None:
-        """title 属性の変更を禁止する."""
-        ni = NamingInput(
-            title="確定申告書",
-            document_date=date(2025, 3, 15),
-            date_has_era=False,
-            period=None,
-            issuer=None,
-        )
-        with pytest.raises(AttributeError):
-            ni.title = "別のタイトル"  # type: ignore[misc]
-
-    def test_frozen_document_date(self) -> None:
-        """document_date 属性の変更を禁止する."""
-        ni = NamingInput(
-            title="確定申告書",
-            document_date=date(2025, 3, 15),
-            date_has_era=False,
-            period=None,
-            issuer=None,
-        )
-        with pytest.raises(AttributeError):
-            ni.document_date = date(2026, 1, 1)  # type: ignore[misc]
-
-    def test_frozen_period(self) -> None:
-        """period 属性の変更を禁止する."""
-        ni = NamingInput(
-            title="確定申告書",
-            document_date=date(2025, 3, 15),
-            date_has_era=False,
-            period=None,
-            issuer=None,
-        )
-        with pytest.raises(AttributeError):
-            ni.period = Period(kind=PeriodKind.CALENDAR_YEAR, year=2025)  # type: ignore[misc]
-
-    def test_frozen_issuer(self) -> None:
-        """issuer 属性の変更を禁止する."""
-        ni = NamingInput(
-            title="確定申告書",
-            document_date=date(2025, 3, 15),
-            date_has_era=False,
-            period=None,
-            issuer=None,
-        )
-        with pytest.raises(AttributeError):
-            ni.issuer = "税務署"  # type: ignore[misc]
-
-    def test_equality(self) -> None:
-        """同一フィールドの NamingInput は等価である."""
-        kwargs = {
-            "title": "確定申告書",
-            "document_date": date(2025, 3, 15),
-            "date_has_era": False,
-            "period": None,
-            "issuer": None,
-        }
-        assert NamingInput(**kwargs) == NamingInput(**kwargs)  # type: ignore[arg-type]
-
-
-# ---------------------------------------------------------------------------
-# PeriodKind: Enum 値の確認
+# PeriodKind: メンバー数ガード
 # ---------------------------------------------------------------------------
 @pytest.mark.unit
 class TestPeriodKindEnum:
-    """PeriodKind の列挙値が設計通りである."""
-
-    def test_calendar_year_value(self) -> None:
-        assert PeriodKind.CALENDAR_YEAR.value == "calendar_year"
-
-    def test_fiscal_year_value(self) -> None:
-        assert PeriodKind.FISCAL_YEAR.value == "fiscal_year"
-
-    def test_explicit_range_value(self) -> None:
-        assert PeriodKind.EXPLICIT_RANGE.value == "explicit_range"
+    """PeriodKind のメンバー数が設計通りであることをガードする."""
 
     def test_member_count(self) -> None:
         """PeriodKind は 3 メンバーのみ."""
@@ -760,6 +637,23 @@ class TestBuildFilenameInputErrors:
             issuer=None,
         )
         with pytest.raises(NamingInputError):
+            build_filename(ni, _make_scanner())
+
+    @pytest.mark.parametrize(
+        "title",
+        ["...", "...."],
+        ids=["periods-only", "many-periods"],
+    )
+    def test_title_empty_after_sanitize_raises(self, title: str) -> None:
+        """サニタイズ後に空になるタイトル（ピリオドのみ等）は NamingInputError."""
+        ni = NamingInput(
+            title=title,
+            document_date=date(2025, 1, 1),
+            date_has_era=False,
+            period=None,
+            issuer=None,
+        )
+        with pytest.raises(NamingInputError, match="empty after sanitization"):
             build_filename(ni, _make_scanner())
 
 

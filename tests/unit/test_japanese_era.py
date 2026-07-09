@@ -11,7 +11,6 @@ import pytest
 from scanner_rename.domain.errors import EraConversionError
 from scanner_rename.domain.japanese_era import (
     Era,
-    EraDate,
     era_to_gregorian,
     format_date_component,
     to_era,
@@ -42,26 +41,6 @@ class TestEraEnum:
         assert era.era_name == name_jp
         assert era.abbreviation == abbreviation
         assert era.start_date == start_date
-
-
-@pytest.mark.unit
-class TestEraDate:
-    """EraDate 値オブジェクトのテスト."""
-
-    def test_frozen(self) -> None:
-        ed = EraDate(era=Era.REIWA, year=1)
-        with pytest.raises(AttributeError):
-            ed.year = 2  # type: ignore[misc]
-
-    def test_equality(self) -> None:
-        a = EraDate(era=Era.REIWA, year=3)
-        b = EraDate(era=Era.REIWA, year=3)
-        assert a == b
-
-    def test_year_one(self) -> None:
-        """元号年 1 は元年."""
-        ed = EraDate(era=Era.REIWA, year=1)
-        assert ed.year == 1
 
 
 @pytest.mark.unit

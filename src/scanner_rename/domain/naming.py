@@ -107,6 +107,9 @@ def build_filename(naming_input: NamingInput, scanner: ScannerFilename) -> str:
 
     # 3. タイトルコンポーネント
     title_comp = sanitize_component(naming_input.title)
+    if not title_comp:
+        msg = f"title becomes empty after sanitization: {naming_input.title!r}"
+        raise NamingInputError(msg)
 
     # 4. 発行元コンポーネント（省略可能）
     issuer_comp: str | None = None
@@ -155,14 +158,26 @@ def _format_period(period: Period) -> str:
     if period.kind == PeriodKind.CALENDAR_YEAR:
         return f"{period.year}年分"
     if period.kind == PeriodKind.FISCAL_YEAR:
-        assert period.start is not None  # validate_naming_input で保証済み
-        assert period.end is not None
+        if period.start is None or period.end is None:
+            missing = ", ".join(
+                f
+                for f, v in [("start", period.start), ("end", period.end)]
+                if v is None
+            )
+            raise NamingInputError(
+                f"Period(kind={period.kind.value}) requires field(s): {missing}"
+            )
         start_s = _format_yearmonth(period.start)
         end_s = _format_yearmonth(period.end)
         return f"{period.year}年度分({start_s}-{end_s})"
     # EXPLICIT_RANGE
-    assert period.start is not None
-    assert period.end is not None
+    if period.start is None or period.end is None:
+        missing = ", ".join(
+            f for f, v in [("start", period.start), ("end", period.end)] if v is None
+        )
+        raise NamingInputError(
+            f"Period(kind={period.kind.value}) requires field(s): {missing}"
+        )
     return f"{_format_yearmonth(period.start)}-{_format_yearmonth(period.end)}"
 
 
