@@ -74,7 +74,7 @@ PBI-ph1-001 の Discovery / `/kiro-spec-batch`（2026-07-08）で、旧想定 PB
 
 進め方: 依存順に直列。スペックごとに 1 セッションで `/kiro-impl {feature}` を実行する。実装セッションは Vertex（Opus/Sonnet）、スペックレビュー・`/kiro-validate-impl`・例外時のデバッグ判断は Fable セッションで行う。各 PBI の完了条件は tasks.md 全完了 + `/kiro-validate-impl` 通過。
 
-- [ ] PBI-ph2-101: `/kiro-impl core-naming-engine` — 純ドメイン層（旧 ph2-001〜005 を包含）
+- [~] PBI-ph2-101: `/kiro-impl core-naming-engine` — 純ドメイン層（旧 ph2-001〜005 を包含）
 - [ ] PBI-ph2-102: `/kiro-impl extraction-pipeline` — ポート/フェイク/スキーマ/プロンプト/アプリフロー（旧 ph3-001〜003 を包含）
 - [ ] PBI-ph2-103: `/kiro-impl gcp-test-broker` — ホスト側 Broker v0（旧 ph4-001〜002 を包含）
 - [ ] PBI-ph2-104: `/kiro-impl cloud-runtime-deploy` — 実アダプタ/クラウド統合テスト/デプロイ/監視（旧 ph5-001〜002、ph6-001〜003 を包含）
