@@ -78,6 +78,7 @@
       "Bash(cat ~/.ssh/*)",
       "Bash(env)",
       "Bash(gcloud auth *)",
+      "Bash(gh pr merge *)",
       "Bash(git commit *--no-verify*)",
       "Bash(git commit *-n *)",
       "Bash(printenv)",

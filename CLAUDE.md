@@ -35,6 +35,7 @@ Specs (`.kiro/specs/`) - 個別機能の開発プロセスを形式化する
 - `.kiro/specs/` でアクティブな仕様を確認
 - `/kiro-spec-status [feature-name]` で進捗確認
 - kiro-\* スキルがスペックファイルを見つけられない場合、「未作成」と判断する前に `git worktree list` と `.claude/worktrees/` を確認する。対応する worktree があれば `EnterWorktree` で入ってから再実行する。
+- kiro-\* スキルがスペックファイルを見つけたが requirements/design の承認状態が予期した状態と異なる場合も同様に、worktree で作業が進んでいる可能性がある。`git worktree list` と `.claude/worktrees/` を確認し、対応する worktree があれば `EnterWorktree` で入ってから再実行する。
 
 ### Minimal Workflow
 
