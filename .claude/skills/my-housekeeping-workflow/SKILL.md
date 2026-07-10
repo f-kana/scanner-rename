@@ -19,6 +19,11 @@ description: |
 
 ---
 
+## 前提条件
+
+メインチェックアウト（worktree ではなく、プロジェクトルート）から実行すること。
+worktree セッション中に呼ばれた場合は `ExitWorktree` で抜けてから `git checkout main` した上で実行する。
+
 ## 設計上の制約
 
 - 破壊的操作（ブランチ削除・worktree 削除・settings 編集）は Step 2 の承認なしに行わない
