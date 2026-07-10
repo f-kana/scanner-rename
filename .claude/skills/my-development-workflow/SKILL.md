@@ -41,14 +41,14 @@ cc-sdd / 完了後処理を一貫したシーケンスで実行する。
 
 ```
 「軽量フロー + Worktree で進めます（軽量だが並行作業との競合を避けるため）。
-  tracking-pbi → worktree → 実装 → 完了マークの順で進めます。」
+  worktree → tracking-pbi → 実装 → 完了マークの順で進めます。」
 ```
 
 または
 
 ```
 「フルフロー（SDD）で進めます（新機能の実装を含むため）。
-  tracking-pbi → worktree → cc-sdd の順で進めます。」
+  worktree → tracking-pbi → cc-sdd の順で進めます。」
 ```
 
 選択したフローと理由を宣言し、ユーザーの承認を待ってから Step 3 に進む。
@@ -101,16 +101,16 @@ cc-sdd / 完了後処理を一貫したシーケンスで実行する。
 
 ### 軽量フロー + Worktree
 
-1. `tracking-pbi` で PBI を進行中 [~] にマーク
-2. `using-git-worktrees` で worktree を作成
+1. `using-git-worktrees` で worktree を作成
+2. `tracking-pbi` で PBI を進行中 [~] にマーク（worktree 内で実行）
 3. 実装
 4. `finishing-a-development-branch` で PR 作成またはマージ
 5. `tracking-pbi` で PBI を完了 [x] にマーク
 
 ### フルフロー（SDD）
 
-1. `tracking-pbi` で PBI を進行中 [~] にマーク
-2. `using-git-worktrees` で worktree を作成
+1. `using-git-worktrees` で worktree を作成
+2. `tracking-pbi` で PBI を進行中 [~] にマーク（worktree 内で実行）
 3. cc-sdd フロー（`/kiro-spec-quick` 等）で仕様策定 → 実装
 4. `finishing-a-development-branch` で PR 作成またはマージ
 5. `tracking-pbi` で PBI を完了 [x] にマーク

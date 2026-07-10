@@ -1,3 +1,13 @@
+## APM 利用可否の確認
+
+「APM が使えるか」「APM で入れられるか」などを問われたら、判断を先行させず、まず以下を確認する。
+
+```bash
+ls apm.yml 2>/dev/null && which apm
+```
+
+両方存在すれば APM は利用可能。確認なしに「不要」と即断しない。
+
 ## apm install 後の差分確認
 
 `apm install` 実行後は必ず `git status` で意図しないファイル生成がないか確認する。
