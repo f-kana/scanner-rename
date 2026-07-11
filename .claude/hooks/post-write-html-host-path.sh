@@ -1,7 +1,7 @@
 #!/bin/bash
 # PostToolUse hook: VS Code Built-in ブラウザ向け Host OS パス解決
 #
-# Write ツールで tmp/**/*.html を書いた直後に発火する。
+# Write ツールで tmp/**/*.html または docs/**/*.html を書いた直後に発火する。
 # VS Code の Built-in ブラウザは Host OS 側のパスで動作するため、
 # DevContainer パスをそのまま提示してもブラウザが開けない。
 # このフックが Host OS 側の等価パスを出力し、Claude がユーザーに伝える。
@@ -16,9 +16,9 @@ set -euo pipefail
 INPUT=$(cat)
 FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null || echo "")
 
-# tmp/**/*.html 以外は対象外
+# tmp/**/*.html と docs/**/*.html 以外は対象外
 [[ -z "$FILE" ]] && exit 0
-[[ "$FILE" != */tmp/*.html && "$FILE" != */tmp/**/*.html ]] && exit 0
+[[ "$FILE" != */tmp/*.html && "$FILE" != */tmp/**/*.html && "$FILE" != */docs/*.html && "$FILE" != */docs/**/*.html ]] && exit 0
 [[ ! -f "$FILE" ]] && exit 0
 
 # Host OS パスを解決する
