@@ -25,32 +25,40 @@ FILE=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null || ech
 host_path=""
 
 # 戦略1: LOCAL_WORKSPACE_FOLDER（一部の VS Code Remote Container 構成で設定される）
-if [[ -n "${LOCAL_WORKSPACE_FOLDER:-}" ]]; then
-  container_workspace="${CLAUDE_PROJECT_DIR:-}"
-  if [[ -n "$container_workspace" ]]; then
-    relative="${FILE#"$container_workspace"}"
-    host_path="${LOCAL_WORKSPACE_FOLDER}${relative}"
-  fi
+if [[ -n "${LOCAL_WORKSPACE_FOLDER:-}" && -n "${CLAUDE_PROJECT_DIR:-}" ]]; then
+  relative="${FILE#"${CLAUDE_PROJECT_DIR}"}"
+  host_path="${LOCAL_WORKSPACE_FOLDER}${relative}"
 fi
 
 # 戦略2: /proc/1/mountinfo（virtiofs / bind マウント）
+# CLAUDE_PROJECT_DIR に依存せず、FILE パスをカバーする最長マウントポイントを探す
+# フォーマット: mountID parentID major:minor root mountpoint options ... - fstype source options
 if [[ -z "$host_path" && -r /proc/1/mountinfo ]]; then
-  container_workspace="${CLAUDE_PROJECT_DIR:-}"
-  if [[ -n "$container_workspace" ]]; then
-    # マウントポイントがワークスペースに一致するエントリを探す
-    # フォーマット: mountID parentID major:minor root mountpoint options ... - fstype source options
-    while IFS= read -r line; do
-      mountpoint=$(echo "$line" | awk '{print $5}')
-      root=$(echo "$line" | awk '{print $4}')
-      if [[ "$container_workspace" == "$mountpoint" || "$container_workspace" == "$mountpoint"/* ]]; then
-        # host path = root + (マウントポイントからの相対パス)
-        relative_to_mount="${container_workspace#"$mountpoint"}"
-        host_root="${root%/}"
-        relative_file="${FILE#"$mountpoint"}"
-        host_path="${host_root}${relative_to_mount}${relative_file}"
-        break
+  best_mountpoint=""
+  best_root=""
+  best_fstype=""
+  while IFS= read -r line; do
+    mountpoint=$(echo "$line" | awk '{print $5}')
+    root=$(echo "$line" | awk '{print $4}')
+    fstype=$(echo "$line" | sed 's/.*- //' | awk '{print $1}')
+    if [[ "$FILE" == "$mountpoint" || "$FILE" == "$mountpoint"/* ]]; then
+      # より具体的（長い）マウントポイントを優先
+      if [[ ${#mountpoint} -gt ${#best_mountpoint} ]]; then
+        best_mountpoint="$mountpoint"
+        best_root="$root"
+        best_fstype="$fstype"
       fi
-    done < /proc/1/mountinfo
+    fi
+  done < /proc/1/mountinfo
+
+  if [[ -n "$best_mountpoint" ]]; then
+    relative_file="${FILE#"$best_mountpoint"}"
+    host_root="${best_root%/}"
+    # macOS virtiofs: mountinfo の root は /Users 以下の相対パスになるため補完する
+    if [[ "$best_fstype" == "virtiofs" && "$host_root" != /Users/* ]]; then
+      host_root="/Users${host_root}"
+    fi
+    host_path="${host_root}${relative_file}"
   fi
 fi
 
